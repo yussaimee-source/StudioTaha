@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="StudioTaha — Social-First Creative Agency. Branding, advertising, web design, video production, social media and packaging design." />
+  <title>StudioTaha — Creative Studio</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════ -->
+  <nav id="nav">
+    <div class="container">
+      <div class="ni">
+        <a href="#" class="logo">Studio<span>Taha</span></a>
+        <ul class="nl">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#stats">Work</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#process">Process</a></li>
+        </ul>
+        <button onclick="openModal()" class="btn btn-p">Let's Talk →</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+       HERO
+  ══════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hbg"></div>
+    <div class="hgrid"></div>
+    <div class="hga"></div>
+    <div class="hgb"></div>
+
+    <div class="hcont">
+      <div class="container" style="position:relative">
+        <p class="eyebrow">Social-First Creative Agency</p>
+        <h1>We make brands<br /><em>impossible</em><br />to ignore.</h1>
+        <p class="hsub">Full-funnel social strategy, creator partnerships, and paid media that drives culture — not just clicks.</p>
+        <div class="hctas">
+          <a href="#stats" class="btn btn-p" style="padding:14px 28px;font-size:.9rem">View Our Work →</a>
+          <a href="#services" class="btn btn-g" style="padding:14px 28px;font-size:.9rem">Explore Services</a>
+        </div>
+        <div class="hbadge">
+          <div class="hbn">137<span>M</span></div>
+          <div class="hbl">Views this quarter</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hsbar">
+      <div class="container">
+        <div class="hstat">
+          <div class="hsn"><span class="cnt" data-t="2.4" data-d="1">0</span><span class="u">B+</span></div>
+          <div class="hsl">Total Impressions</div>
+        </div>
+        <div class="hstat">
+          <div class="hsn"><span class="cnt" data-t="137">0</span><span class="u">M</span></div>
+          <div class="hsl">Video Views</div>
+        </div>
+        <div class="hstat">
+          <div class="hsn"><span class="cnt" data-t="6.8" data-d="1">0</span><span class="u">×</span></div>
+          <div class="hsl">Avg. ROAS</div>
+        </div>
+        <div class="hstat">
+          <div class="hsn"><span class="cnt" data-t="400">0</span><span class="u">+</span></div>
+          <div class="hsl">Campaigns</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       LOGO TICKER
+  ══════════════════════════════════════ -->
+  <div id="ticker">
+    <p class="tl">Trusted by the world's most ambitious brands</p>
+    <div style="overflow:hidden">
+      <div class="tt">
+        <span class="tlogo"><span class="tdot"></span>Spotify</span>
+        <span class="tlogo"><span class="tdot"></span>Samsung</span>
+        <span class="tlogo"><span class="tdot"></span>Red Bull</span>
+        <span class="tlogo"><span class="tdot"></span>Adidas</span>
+        <span class="tlogo"><span class="tdot"></span>Netflix</span>
+        <span class="tlogo"><span class="tdot"></span>Dyson</span>
+        <span class="tlogo"><span class="tdot"></span>L'Oréal</span>
+        <span class="tlogo"><span class="tdot"></span>Porsche</span>
+        <span class="tlogo"><span class="tdot"></span>ASOS</span>
+        <span class="tlogo"><span class="tdot"></span>Gymshark</span>
+        <!-- Duplicate for seamless loop -->
+        <span class="tlogo"><span class="tdot"></span>Spotify</span>
+        <span class="tlogo"><span class="tdot"></span>Samsung</span>
+        <span class="tlogo"><span class="tdot"></span>Red Bull</span>
+        <span class="tlogo"><span class="tdot"></span>Adidas</span>
+        <span class="tlogo"><span class="tdot"></span>Netflix</span>
+        <span class="tlogo"><span class="tdot"></span>Dyson</span>
+        <span class="tlogo"><span class="tdot"></span>L'Oréal</span>
+        <span class="tlogo"><span class="tdot"></span>Porsche</span>
+        <span class="tlogo"><span class="tdot"></span>ASOS</span>
+        <span class="tlogo"><span class="tdot"></span>Gymshark</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       ABOUT
+  ══════════════════════════════════════ -->
+  <section id="about">
+    <div class="container">
+      <div class="ag">
+
+        <!-- Images -->
+        <div class="aimgs rv">
+          <div class="aim">
+            <img
+              src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=900&q=80&auto=format&fit=crop"
+              alt="Creative team at work — Photo by Marvin Meyer on Unsplash"
+              loading="lazy"
+            />
+            <div class="apill"><span class="ldot"></span>Live Campaign Room</div>
+          </div>
+          <div class="ais">
+            <img
+              src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=500&q=80&auto=format&fit=crop"
+              alt="Strategy session — Photo by Austin Distel on Unsplash"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Copy -->
+        <div class="rv d2">
+          <div class="stag">Who We Are</div>
+          <h2 style="font-size:clamp(2rem,3.5vw,3.2rem);margin-bottom:22px">
+            Born on the feed.<br />Built for results.
+          </h2>
+          <p style="color:var(--muted);font-size:.93rem;line-height:1.75;margin-bottom:14px">
+            StudioTaha is a team of strategists, creatives, and data obsessives who believe social media is the most powerful marketing channel on earth — when done right.
+          </p>
+          <p style="color:var(--muted);font-size:.93rem;line-height:1.75;margin-bottom:24px">
+            Since 2018, StudioTaha has helped over 200 brands turn followers into customers, campaigns into culture, and budgets into measurable returns.
+          </p>
+          <ul class="alist">
+            <li>300+ creator partnerships managed globally</li>
+            <li>In-house creative studio for content production</li>
+            <li>Proprietary influencer-matching technology</li>
+            <li>Dedicated performance team for paid social</li>
+          </ul>
+          <a href="#team" class="btn btn-g">Meet the Team</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SERVICES — What We Do
+  ══════════════════════════════════════ -->
+  <section id="services">
+    <div class="container">
+
+      <div class="sh rv">
+        <div>
+          <div class="stag">What We Do</div>
+          <h2 style="font-size:clamp(2.2rem,4.5vw,3.8rem)">Craft that moves.<br />Design that sells.</h2>
+        </div>
+        <p class="sdesc">From first impression to final pixel — we build brands that look unmistakable and perform at every touchpoint.</p>
+      </div>
+
+      <div class="svc-grid">
+
+        <!-- 01 Branding & Identity -->
+        <div class="svc-card rv">
+          <div class="svc-thumb">
+            <span class="svc-num">01</span>
+            <img
+              src="https://images.unsplash.com/photo-1634942537034-2531766767d1?w=800&q=80&auto=format&fit=crop"
+              alt="Branding & Identity"
+              loading="lazy"
+            />
+          </div>
+          <div class="svc-body">
+            <h3>Branding & Identity</h3>
+            <p>We build brand systems that mean something — logo, typography, colour, and the guidelines that keep everything coherent as you grow. Your identity should be instantly recognisable whether it's on a billboard or a business card.</p>
+            <div class="svc-tags">
+              <span class="chip">Logo Design</span>
+              <span class="chip">Brand Guidelines</span>
+              <span class="chip">Visual Identity</span>
+            </div>
+            <a href="#" class="svc-link">Learn More <span class="arr">↗</span></a>
+          </div>
+        </div>
+
+        <!-- 02 Digital & Traditional Advertising -->
+        <div class="svc-card rv d1">
+          <div class="svc-thumb">
+            <span class="svc-num">02</span>
+            <img
+              src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=80&auto=format&fit=crop"
+              alt="Digital & Traditional Advertising"
+              loading="lazy"
+            />
+          </div>
+          <div class="svc-body">
+            <h3>Digital & Traditional Advertising</h3>
+            <p>From scroll-stopping digital ads to full-page print campaigns, we craft messages that land with precision — across every medium, every format, every audience segment your brand needs to reach.</p>
+            <div class="svc-tags">
+              <span class="chip">Campaign Creative</span>
+              <span class="chip">Print & OOH</span>
+              <span class="chip">Digital Ads</span>
+            </div>
+            <a href="#" class="svc-link">Learn More <span class="arr">↗</span></a>
+          </div>
+        </div>
+
+        <!-- 03 Web & UI/UX Design -->
+        <div class="svc-card rv d2">
+          <div class="svc-thumb">
+            <span class="svc-num">03</span>
+            <img
+              src="https://images.unsplash.com/photo-1545235617-9465d2a55698?w=800&q=80&auto=format&fit=crop"
+              alt="Web & UI/UX Design"
+              loading="lazy"
+            />
+          </div>
+          <div class="svc-body">
+            <h3>Web & UI/UX Design</h3>
+            <p>Websites and interfaces that convert — because good design isn't decoration, it's direction. We design digital experiences that guide users intuitively from first click to final action, beautifully.</p>
+            <div class="svc-tags">
+              <span class="chip">UX Research</span>
+              <span class="chip">UI Design</span>
+              <span class="chip">Webflow / Dev</span>
+            </div>
+            <a href="#" class="svc-link">Learn More <span class="arr">↗</span></a>
+          </div>
+        </div>
+
+        <!-- 04 Video Production & Motion Graphics -->
+        <div class="svc-card rv">
+          <div class="svc-thumb">
+            <span class="svc-num">04</span>
+            <img
+              src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80&auto=format&fit=crop"
+              alt="Video Production & Motion Graphics"
+              loading="lazy"
+            />
+          </div>
+          <div class="svc-body">
+            <h3>Video Production & Motion Graphics</h3>
+            <p>Compelling video content and kinetic motion design for campaigns, brand films, product launches, and everything in between. We handle concept, production, and post — all under one roof.</p>
+            <div class="svc-tags">
+              <span class="chip">Brand Films</span>
+              <span class="chip">Motion Design</span>
+              <span class="chip">Post-Production</span>
+            </div>
+            <a href="#" class="svc-link">Learn More <span class="arr">↗</span></a>
+          </div>
+        </div>
+
+        <!-- 05 Social Media & Digital Assets -->
+        <div class="svc-card rv d1">
+          <div class="svc-thumb">
+            <span class="svc-num">05</span>
+            <img
+              src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80&auto=format&fit=crop"
+              alt="Social Media & Digital Assets"
+              loading="lazy"
+            />
+          </div>
+          <div class="svc-body">
+            <h3>Social Media & Digital Assets</h3>
+            <p>Platform-native creative that stops the scroll — feed graphics, stories, reels, ad creatives, and full content suites designed to feel native to every platform your audience lives on.</p>
+            <div class="svc-tags">
+              <span class="chip">Content Design</span>
+              <span class="chip">Ad Creatives</span>
+              <span class="chip">Templates & Kits</span>
+            </div>
+            <a href="#" class="svc-link">Learn More <span class="arr">↗</span></a>
+          </div>
+        </div>
+
+        <!-- 06 Packaging Design -->
+        <div class="svc-card rv d2">
+          <div class="svc-thumb">
+            <span class="svc-num">06</span>
+            <img
+              src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&q=80&auto=format&fit=crop"
+              alt="Packaging Design"
+              loading="lazy"
+            />
+          </div>
+          <div class="svc-body">
+            <h3>Packaging Design</h3>
+            <p>Packaging is the most tactile expression of your brand. We design structures and surface graphics that stand out on shelf, communicate quality at a glance, and make unboxing a moment worth sharing.</p>
+            <div class="svc-tags">
+              <span class="chip">Structural Design</span>
+              <span class="chip">Label & Surface</span>
+              <span class="chip">Print-Ready Artwork</span>
+            </div>
+            <a href="#" class="svc-link">Learn More <span class="arr">↗</span></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       STATS / CASE STUDIES
+  ══════════════════════════════════════ -->
+  <section id="stats">
+    <div class="container">
+      <div class="rv">
+        <div class="slbl">Impact & Results</div>
+        <h2 style="font-size:clamp(2.2rem,4.5vw,3.8rem);margin-bottom:56px">Numbers that<br />make boards happy.</h2>
+      </div>
+
+      <div class="sgr">
+
+        <!-- Featured card -->
+        <div class="sfeat rv">
+          <div class="sfi">
+            <img
+              src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=900&q=80&auto=format&fit=crop"
+              alt="Campaign shoot — Photo by Melanie Deziel on Unsplash"
+              loading="lazy"
+            />
+          </div>
+          <div class="sfb">
+            <div class="sclient">Red Bull — TikTok Campaign</div>
+            <div class="snum2" style="font-size:4rem">137M</div>
+            <p class="sdesc2">Organic views generated through a 14-creator cross-territory activation in under 6 weeks. The most-watched brand campaign in Red Bull's TikTok history.</p>
+            <div class="sfoot"><span>Q3 2024</span><span class="spill">+420% vs target</span></div>
+          </div>
+        </div>
+
+        <!-- Small cards -->
+        <div class="sc rv d1">
+          <div class="sci">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=75&auto=format&fit=crop" alt="Analytics" loading="lazy" />
+          </div>
+          <div class="scb">
+            <div class="sclient">Gymshark — Paid Social</div>
+            <div class="snum2">6.8×</div>
+            <p class="sdesc2">Return on ad spend scaling Meta campaigns from £50K to £500K/month over 90 days.</p>
+            <div class="sfoot"><span>2024 Annual</span><span class="spill">Best ROAS ever</span></div>
+          </div>
+        </div>
+
+        <div class="sc rv d2">
+          <div class="sci">
+            <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=700&q=75&auto=format&fit=crop" alt="Influencer" loading="lazy" />
+          </div>
+          <div class="scb">
+            <div class="sclient">L'Oréal — Influencer Launch</div>
+            <div class="snum2">2.4B</div>
+            <p class="sdesc2">Total reach using 320 creators across Instagram and YouTube for a global product launch.</p>
+            <div class="sfoot"><span>Global Campaign</span><span class="spill">Sold out in 48hrs</span></div>
+          </div>
+        </div>
+
+        <div class="sc rv d3">
+          <div class="sci">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&q=75&auto=format&fit=crop" alt="Community" loading="lazy" />
+          </div>
+          <div class="scb">
+            <div class="sclient">ASOS — Community Strategy</div>
+            <div class="snum2">890K</div>
+            <p class="sdesc2">New community members in 4 months through a UGC and micro-creator programme.</p>
+            <div class="sfoot"><span>Ongoing Retainer</span><span class="spill">+180% engagement</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       TEAM
+  ══════════════════════════════════════ -->
+  <section id="team">
+    <div class="container">
+      <div class="rv" style="margin-bottom:52px">
+        <div class="stag">The People</div>
+        <h2 style="font-size:clamp(2rem,3.5vw,3.2rem)">Meet the minds<br />behind the magic.</h2>
+      </div>
+      <div class="tgr">
+
+        <div class="tc rv d1">
+          <div class="tp">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80&auto=format&fit=crop&crop=faces,center" alt="Taha — Founder & CEO" loading="lazy" />
+            <div class="tov"></div>
+          </div>
+          <div class="ti">
+            <div class="tn">Taha</div>
+            <div class="tr">Founder & CEO</div>
+          </div>
+        </div>
+
+        <div class="tc rv d2">
+          <div class="tp">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80&auto=format&fit=crop&crop=faces,center" alt="Sofia Reyes — Creative Director" loading="lazy" />
+            <div class="tov"></div>
+          </div>
+          <div class="ti">
+            <div class="tn">Sofia Reyes</div>
+            <div class="tr">Creative Director</div>
+          </div>
+        </div>
+
+        <div class="tc rv d3">
+          <div class="tp">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80&auto=format&fit=crop&crop=faces,center" alt="Marcus Webb — Head of Strategy" loading="lazy" />
+            <div class="tov"></div>
+          </div>
+          <div class="ti">
+            <div class="tn">Marcus Webb</div>
+            <div class="tr">Head of Strategy</div>
+          </div>
+        </div>
+
+        <div class="tc rv d4">
+          <div class="tp">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80&auto=format&fit=crop&crop=faces,center" alt="Priya Sharma — Performance Lead" loading="lazy" />
+            <div class="tov"></div>
+          </div>
+          <div class="ti">
+            <div class="tn">Priya Sharma</div>
+            <div class="tr">Performance Lead</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       PROCESS
+  ══════════════════════════════════════ -->
+  <section id="process">
+    <div class="container">
+      <div class="rv">
+        <div class="stag">How We Work</div>
+        <h2 style="font-size:clamp(2rem,3.5vw,3.2rem)">Four steps to<br />extraordinary results.</h2>
+      </div>
+      <div class="pgr rv d1">
+        <div class="ps">
+          <div class="psn">01</div>
+          <h3>Discover</h3>
+          <p>Deep-dive into your brand, audience data, competitive landscape, and past campaign performance to uncover the real opportunity.</p>
+        </div>
+        <div class="ps">
+          <div class="psn">02</div>
+          <h3>Strategise</h3>
+          <p>Build a channel-specific playbook with creator selection, content pillars, paid amplification, and clear KPIs for every stage.</p>
+        </div>
+        <div class="ps">
+          <div class="psn">03</div>
+          <h3>Execute</h3>
+          <p>Briefing, production, creator coordination, paid activation — all managed in-house with full transparency and real-time reporting.</p>
+        </div>
+        <div class="ps">
+          <div class="psn">04</div>
+          <h3>Optimise</h3>
+          <p>Real-time performance monitoring, creative iteration, and monthly QBRs that turn data into compounding decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CTA BANNER
+  ══════════════════════════════════════ -->
+  <section id="cta">
+    <div class="container">
+      <div class="cinner rv">
+        <div class="cbg"></div>
+        <div class="ccont">
+          <h2 style="font-size:clamp(2rem,3.5vw,3rem);max-width:480px">
+            Ready to work<br />with
+            <span style="background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">StudioTaha?</span>
+          </h2>
+          <div class="cacts">
+            <button onclick="openModal()" class="btn btn-p" style="font-size:.93rem;padding:15px 30px">Start a Project →</button>
+            <a href="#" class="btn btn-g" style="font-size:.93rem;padding:15px 30px">Download Deck</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CONTACT MODAL
+  ══════════════════════════════════════ -->
+  <div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop" onclick="closeModal()"></div>
+    <div class="modal">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <div>
+          <h3 id="modalTitle">Start a project<br />with <span>StudioTaha</span></h3>
+          <p>Tell us about your vision — we'll get back within 24 hours.</p>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+      </div>
+
+      <!-- Form -->
+      <div class="modal-form" id="modalForm">
+
+        <div class="form-row">
+          <div class="field">
+            <label for="cf-name">Your Name</label>
+            <input type="text" id="cf-name" placeholder="Alex Johnson" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="cf-email">Email Address</label>
+            <input type="email" id="cf-email" placeholder="alex@company.com" autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="cf-company">Company / Brand</label>
+            <input type="text" id="cf-company" placeholder="Acme Inc." />
+          </div>
+          <div class="field">
+            <label for="cf-service">Service Interested In</label>
+            <select id="cf-service">
+              <option value="" disabled selected>Select a service…</option>
+              <option>Branding &amp; Identity</option>
+              <option>Digital &amp; Traditional Advertising</option>
+              <option>Web &amp; UI/UX Design</option>
+              <option>Video Production &amp; Motion Graphics</option>
+              <option>Social Media &amp; Digital Assets</option>
+              <option>Packaging Design</option>
+              <option>Multiple / Not Sure Yet</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Estimated Budget</label>
+          <div class="budget-chips" id="budgetChips">
+            <span class="bchip" data-v="< $5K">&lt; $5K</span>
+            <span class="bchip" data-v="$5K–$15K">$5K–$15K</span>
+            <span class="bchip" data-v="$15K–$50K">$15K–$50K</span>
+            <span class="bchip" data-v="$50K+">$50K+</span>
+            <span class="bchip" data-v="Let's Talk">Let's Talk</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="cf-message">Tell Us About Your Project</label>
+          <textarea id="cf-message" placeholder="Briefly describe what you're looking to build, launch, or transform…"></textarea>
+        </div>
+
+        <div class="modal-divider"></div>
+
+        <div class="modal-submit">
+          <button class="btn btn-p" id="submitBtn" onclick="submitForm()">Send Message →</button>
+          <span class="modal-note">Your details are kept private</span>
+        </div>
+
+      </div>
+
+      <!-- Success state -->
+      <div class="modal-success" id="modalSuccess">
+        <div class="success-icon">✦</div>
+        <h3>Message received!</h3>
+        <p>Thanks for reaching out. Taha and the team will review your project brief and be in touch within 24 hours.</p>
+        <button class="btn btn-g" onclick="closeModal()" style="margin-top:8px;padding:12px 28px">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="fi">
+        <div class="logo">Studio<span>Taha</span></div>
+        <ul class="fl">
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Work</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+        <p style="font-size:.74rem;color:rgba(255,255,255,.18)">© 2025 StudioTaha · Photos via <a href="https://unsplash.com" target="_blank" style="color:rgba(0,209,255,.35)">Unsplash</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════ -->
+  <script>
+    /* ── Sticky nav ── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    /* ── Scroll reveal ── */
+    const ro = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('vi');
+          ro.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+
+    /* ── Animated counters ── */
+    function counter(el, target, isDecimal, duration = 1800) {
+      let startTime = null;
+      const step = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const eased    = 1 - Math.pow(1 - progress, 3);
+        const value    = eased * target;
+        el.textContent = isDecimal ? value.toFixed(1) : Math.floor(value).toLocaleString();
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const el = e.target;
+          counter(el, +el.dataset.t, !!el.dataset.d);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.cnt').forEach(el => counterObserver.observe(el));
+
+    /* ── Modal ── */
+    const overlay = document.getElementById('contactModal');
+    let selectedBudget = '';
+
+    function openModal() {
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('modalForm').style.display    = 'flex';
+      document.getElementById('modalForm').style.flexDirection = 'column';
+      document.getElementById('modalSuccess').classList.remove('show');
+      setTimeout(() => document.getElementById('cf-name').focus(), 350);
+    }
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    /* Close on Escape */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    /* Budget chip toggle */
+    document.getElementById('budgetChips').addEventListener('click', e => {
+      const chip = e.target.closest('.bchip');
+      if (!chip) return;
+      document.querySelectorAll('.bchip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      selectedBudget = chip.dataset.v;
+    });
+
+    /* Form submit */
+    function submitForm() {
+      const requiredFields = [
+        document.getElementById('cf-name'),
+        document.getElementById('cf-email'),
+        document.getElementById('cf-message')
+      ];
+
+      let valid = true;
+      requiredFields.forEach(el => {
+        if (!el.value.trim()) {
+          el.style.borderColor = 'rgba(255, 80, 80, 0.5)';
+          el.style.boxShadow   = '0 0 0 3px rgba(255, 80, 80, 0.08)';
+          valid = false;
+          el.addEventListener('input', () => {
+            el.style.borderColor = '';
+            el.style.boxShadow   = '';
+          }, { once: true });
+        }
+      });
+
+      if (!valid) return;
+
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Sending…';
+      btn.disabled    = true;
+
+      /*
+       * Replace the setTimeout below with your real form handler, e.g.:
+       *   fetch('/api/contact', { method:'POST', body: JSON.stringify({...}) })
+       *   or EmailJS / Formspree
+       */
+      setTimeout(() => {
+        document.getElementById('modalForm').style.display = 'none';
+        document.getElementById('modalSuccess').classList.add('show');
+      }, 1200);
+    }
+  </script>
+
+</body>
+</html>
