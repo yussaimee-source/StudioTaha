@@ -15,8 +15,456 @@
   <style>
 
   /* ══════════════════════════════════════
-     SALAAM PAGE — design tokens
+     UNIFORM PRODUCT GRID
   ══════════════════════════════════════ */
+  .sl-uniform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  @media (max-width: 900px) { .sl-uniform-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .sl-uniform-grid { grid-template-columns: 1fr; } }
+
+  .sl-ucard {
+    background: var(--card);
+    border: 1px solid var(--gold-md);
+    border-radius: 16px; overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: all .4s var(--ease);
+  }
+  .sl-ucard:hover {
+    transform: translateY(-6px);
+    border-color: var(--gold-hi);
+    box-shadow: 0 24px 56px rgba(0,0,0,.55), 0 0 0 1px rgba(201,168,76,.08);
+  }
+  .sl-ucard-img {
+    position: relative; height: 220px; overflow: hidden;
+  }
+  .sl-ucard-img img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: brightness(.52) saturate(.65);
+    transition: transform .55s var(--ease), filter .4s;
+  }
+  .sl-ucard:hover .sl-ucard-img img { transform: scale(1.07); filter: brightness(.7) saturate(.85); }
+  .sl-ucard-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,.3);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .3s;
+  }
+  .sl-ucard:hover .sl-ucard-overlay { opacity: 1; }
+  .sl-quick-btn {
+    background: rgba(201,168,76,.9); color: #000;
+    border: none; border-radius: 100px;
+    padding: 10px 22px; font-size: .78rem; font-weight: 700;
+    cursor: pointer; font-family: var(--fb);
+    transition: transform .2s;
+  }
+  .sl-quick-btn:hover { transform: scale(1.06); }
+
+  .sl-ucard-body {
+    padding: 18px 20px 20px; flex: 1;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .sl-ucard-body h3 { font-size: .95rem; line-height: 1.3; transition: color .2s; }
+  .sl-ucard:hover .sl-ucard-body h3 { color: var(--gold); }
+
+  .sl-ucard-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: auto; padding-top: 14px;
+    border-top: 1px solid var(--gold-lo);
+  }
+  .sl-ucard-price { font-size: .8rem; color: var(--muted); }
+  .sl-ucard-price strong { color: var(--gold); font-family: var(--fh); font-size: 1rem; font-weight: 800; }
+
+  .btn-gold-sm {
+    background: var(--gold); color: #000;
+    border: none; border-radius: 100px;
+    padding: 8px 16px; font-size: .72rem; font-weight: 700;
+    cursor: pointer; font-family: var(--fb);
+    transition: all .2s;
+  }
+  .btn-gold-sm:hover { background: var(--gold2); transform: translateY(-1px); }
+
+  /* Cart FAB */
+  .cart-fab {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--gold); color: #000;
+    border: none; border-radius: 100px;
+    padding: 10px 22px; font-size: .82rem; font-weight: 700;
+    cursor: pointer; font-family: var(--fb);
+    transition: all .25s; position: relative;
+  }
+  .cart-fab:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,.3); }
+  .cart-count {
+    position: absolute; top: -6px; right: -6px;
+    background: #e8222e; color: #fff;
+    font-size: .6rem; font-weight: 700;
+    width: 18px; height: 18px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ══════════════════════════════════════
+     E-COMMERCE OVERLAYS & MODALS
+  ══════════════════════════════════════ */
+  .ec-overlay {
+    position: fixed; inset: 0; z-index: 9100;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s var(--ease);
+  }
+  .ec-overlay.open { opacity: 1; pointer-events: all; }
+  .ec-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,.82); backdrop-filter: blur(16px);
+  }
+  .ec-modal {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 780px;
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px; overflow: hidden;
+    transform: translateY(28px) scale(.97);
+    transition: transform .4s var(--ease), opacity .35s;
+    opacity: 0; max-height: 92vh; overflow-y: auto;
+  }
+  .ec-overlay.open .ec-modal { transform: translateY(0) scale(1); opacity: 1; }
+  .ec-modal-top-bar {
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold2));
+    flex-shrink: 0;
+  }
+  .ec-close {
+    position: absolute; top: 14px; right: 14px; z-index: 10;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,.06); border: 1px solid var(--border);
+    color: var(--muted); font-size: .92rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .ec-close:hover { background: rgba(255,255,255,.12); color: var(--text); }
+
+  /* Product modal inner */
+  .ec-product-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; min-height: 420px;
+  }
+  @media (max-width: 640px) { .ec-product-inner { grid-template-columns: 1fr; } }
+
+  .ec-product-img-wrap {
+    position: relative; overflow: hidden;
+    min-height: 280px;
+  }
+  .ec-product-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: brightness(.6) saturate(.7);
+  }
+  .ec-badge {
+    position: absolute; top: 14px; left: 14px;
+    font-size: .58rem; font-weight: 700; letter-spacing: .12em;
+    color: var(--gold); background: rgba(0,0,0,.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--gold-md); border-radius: 100px; padding: 4px 10px;
+  }
+  .ec-product-details {
+    padding: 36px 32px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .ec-prod-title { font-size: clamp(1.1rem, 2vw, 1.5rem); line-height: 1.15; }
+  .ec-prod-desc { font-size: .82rem; color: var(--muted); line-height: 1.7; }
+
+  .ec-option-group { display: flex; flex-direction: column; gap: 8px; }
+  .ec-option-label {
+    font-size: .65rem; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ec-sel-val { color: var(--gold2); font-weight: 400; text-transform: none; letter-spacing: 0; }
+  .ec-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .ec-chip {
+    padding: 7px 14px; border-radius: 100px;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--muted); font-size: .74rem; font-family: var(--fb);
+    cursor: pointer; transition: all .2s;
+  }
+  .ec-chip:hover { border-color: var(--gold-md); color: var(--text); }
+  .ec-chip.active { background: var(--gold-lo); border-color: var(--gold); color: var(--gold2); }
+
+  .ec-qty-row { display: flex; align-items: center; gap: 14px; }
+  .ec-qty-ctrl {
+    display: flex; align-items: center;
+    border: 1px solid var(--gold-md); border-radius: 100px; overflow: hidden;
+  }
+  .ec-qty-ctrl button {
+    width: 34px; height: 34px; background: var(--gold-lo);
+    border: none; color: var(--text); font-size: 1rem;
+    cursor: pointer; transition: background .2s; font-family: var(--fb);
+  }
+  .ec-qty-ctrl button:hover { background: var(--gold-md); }
+  .ec-qty-ctrl span {
+    min-width: 36px; text-align: center; font-size: .9rem; font-weight: 500;
+    padding: 0 4px;
+  }
+  .ec-unit-price { font-size: .75rem; color: var(--muted); }
+
+  .ec-price-row { display: flex; align-items: baseline; gap: 10px; }
+  .ec-price { font-family: var(--fh); font-size: 1.8rem; font-weight: 800; color: var(--gold); }
+  .ec-price-note { font-size: .72rem; color: var(--muted); }
+  .ec-add-btn { justify-content: center; padding: 14px; font-size: .9rem; width: 100%; }
+  .ec-trust-note { font-size: .68rem; color: rgba(255,255,255,.25); line-height: 1.6; }
+
+  /* ── Cart Drawer ── */
+  .cart-overlay {
+    position: fixed; inset: 0; z-index: 9050;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s;
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+  .cart-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,.7); backdrop-filter: blur(10px);
+  }
+  .cart-drawer {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: min(420px, 100vw);
+    background: var(--card);
+    border-left: 1px solid rgba(255,255,255,.08);
+    display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform .4s var(--ease);
+  }
+  .cart-overlay.open .cart-drawer { transform: translateX(0); }
+
+  .cart-drawer-head {
+    padding: 24px 24px 20px;
+    border-bottom: 1px solid var(--gold-md);
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(180deg, var(--gold-lo), transparent);
+    flex-shrink: 0;
+  }
+  .cart-drawer-head h3 { font-family: var(--fh); font-size: 1.1rem; }
+  .cart-drawer-count {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--gold); color: #000;
+    font-size: .62rem; font-weight: 800;
+    width: 20px; height: 20px; border-radius: 50%;
+    margin-left: 8px;
+  }
+
+  .cart-items { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .cart-empty { text-align: center; padding: 48px 20px; color: var(--muted); }
+  .cart-empty p { font-size: .9rem; margin-bottom: 4px; }
+  .cart-empty span { font-size: .78rem; }
+
+  .cart-item {
+    display: grid; grid-template-columns: 64px 1fr auto;
+    gap: 12px; align-items: center;
+    background: rgba(255,255,255,.03);
+    border: 1px solid var(--gold-lo);
+    border-radius: 12px; padding: 12px;
+  }
+  .cart-item-img {
+    width: 64px; height: 64px; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--gold-md);
+  }
+  .cart-item-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.65); }
+  .cart-item-info { min-width: 0; }
+  .cart-item-name { font-size: .82rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cart-item-variant { font-size: .68rem; color: var(--muted); margin: 2px 0; }
+  .cart-item-qty-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .cart-item-qty-btn {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--gold-lo); border: 1px solid var(--gold-md);
+    color: var(--text); font-size: .8rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .cart-item-qty-btn:hover { background: var(--gold-md); }
+  .cart-item-qty-num { font-size: .78rem; min-width: 18px; text-align: center; }
+  .cart-item-price { font-family: var(--fh); font-size: .95rem; font-weight: 800; color: var(--gold); white-space: nowrap; }
+  .cart-item-remove {
+    background: none; border: none; color: rgba(255,255,255,.2);
+    font-size: .8rem; cursor: pointer; padding: 4px;
+    transition: color .2s; line-height: 1;
+  }
+  .cart-item-remove:hover { color: rgba(255,80,80,.7); }
+
+  .cart-drawer-foot { padding: 16px; border-top: 1px solid var(--gold-md); flex-shrink: 0; }
+  .cart-subtotal {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: .9rem; font-weight: 600; margin-bottom: 8px;
+  }
+  .cart-subtotal span:last-child { font-family: var(--fh); font-size: 1.2rem; color: var(--gold); }
+  .cart-shipping-note { font-size: .7rem; color: var(--muted); margin-bottom: 4px; }
+
+  /* ── Checkout Steps ── */
+  .ck-steps {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; padding: 22px 32px 16px;
+    border-bottom: 1px solid var(--gold-md);
+  }
+  .ck-step {
+    display: flex; align-items: center; gap: 7px;
+    font-size: .72rem; font-weight: 600; color: var(--muted);
+    transition: color .3s;
+  }
+  .ck-step span {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--border); color: var(--muted);
+    font-size: .65rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .3s;
+  }
+  .ck-step.active { color: var(--gold); }
+  .ck-step.active span { background: var(--gold); color: #000; }
+  .ck-step.done { color: var(--gold2); }
+  .ck-step.done span { background: var(--gold2); color: #000; }
+  .ck-step-line { flex: 1; height: 1px; background: var(--border); margin: 0 10px; max-width: 48px; }
+
+  .ck-panel-title { font-family: var(--fh); font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+  .ck-panel-sub { font-size: .8rem; color: var(--muted); margin-bottom: 16px; }
+
+  .ck-order-mini {
+    margin: 0 32px 16px;
+    background: var(--gold-lo); border: 1px solid var(--gold-md);
+    border-radius: var(--r); padding: 12px 16px;
+    display: flex; flex-direction: column; gap: 6px;
+    max-height: 130px; overflow-y: auto;
+  }
+  .ck-mini-item {
+    display: flex; justify-content: space-between;
+    font-size: .78rem; color: var(--muted);
+  }
+  .ck-mini-item span:last-child { color: var(--gold); font-weight: 600; }
+
+  .ck-form { padding: 0 32px; display: flex; flex-direction: column; gap: 12px; }
+  .ck-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 540px) { .ck-row { grid-template-columns: 1fr; } }
+  .ck-field { display: flex; flex-direction: column; gap: 5px; }
+  .ck-field label {
+    font-size: .63rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .ck-field input, .ck-field select, .ck-field textarea {
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px; padding: 11px 14px;
+    color: var(--text); font-family: var(--fb); font-size: .85rem;
+    font-weight: 300; outline: none; width: 100%; box-sizing: border-box;
+    transition: border-color .25s, box-shadow .25s; appearance: none;
+  }
+  .ck-field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; cursor: pointer;
+  }
+  .ck-field select option { background: #111; }
+  .ck-field textarea { resize: vertical; line-height: 1.6; min-height: 72px; }
+  .ck-field input::placeholder, .ck-field textarea::placeholder { color: rgba(255,255,255,.18); }
+  .ck-field input:focus, .ck-field select:focus, .ck-field textarea:focus {
+    border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,.1);
+  }
+  .ck-field input.ck-err { border-color: rgba(255,80,80,.5); box-shadow: 0 0 0 3px rgba(255,80,80,.08); }
+
+  .ck-foot {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 32px 28px; margin-top: 16px;
+  }
+
+  .ck-amount-box {
+    margin: 0 32px 20px;
+    background: rgba(201,168,76,.08); border: 1px solid var(--gold-md);
+    border-radius: 12px; padding: 16px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .ck-amount-box .lbl { font-size: .72rem; color: var(--muted); margin-bottom: 3px; }
+  .ck-amount-box .amt { font-family: var(--fh); font-size: 1.6rem; font-weight: 800; color: var(--gold); }
+  .ck-amount-box .note { font-size: .65rem; color: var(--muted); }
+
+  .ck-option-label {
+    font-size: .65rem; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .ck-banks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .ck-bank-opt {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; border-radius: 12px;
+    border: 1px solid var(--border); cursor: pointer;
+    transition: all .25s; background: rgba(255,255,255,.02);
+  }
+  .ck-bank-opt:hover { border-color: var(--gold-md); background: var(--gold-lo); }
+  .ck-bank-opt.selected { border-color: var(--gold); background: var(--gold-lo); }
+  .ck-bank-radio {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    transition: all .2s;
+  }
+  .ck-bank-opt.selected .ck-bank-radio { border-color: var(--gold); background: var(--gold); }
+  .ck-bank-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .ck-bank-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .ck-bank-info strong { font-size: .85rem; color: var(--text); }
+  .ck-bank-info span { font-size: .7rem; color: var(--muted); font-family: monospace; letter-spacing: .06em; }
+  .ck-bank-tick { color: var(--gold); font-size: .8rem; opacity: 0; transition: opacity .2s; }
+  .ck-bank-opt.selected .ck-bank-tick { opacity: 1; }
+
+  .ck-transfer-box {
+    background: rgba(0,0,0,.3); border: 1px solid var(--gold-md);
+    border-radius: 12px; padding: 14px 18px;
+    display: flex; flex-direction: column; gap: 0; margin-bottom: 14px;
+  }
+  .ck-transfer-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 0; border-bottom: 1px solid var(--gold-lo);
+    font-size: .8rem;
+  }
+  .ck-transfer-row span:first-child { color: var(--muted); }
+  .ck-transfer-row span:last-child, .ck-transfer-row strong { color: var(--text); font-family: monospace; }
+  .ck-transfer-row:last-child { border-bottom: none; }
+  .ck-copy-btn {
+    background: var(--gold-lo); border: 1px solid var(--gold-md);
+    border-radius: 6px; padding: 3px 10px;
+    font-size: .6rem; color: var(--gold); cursor: pointer;
+    transition: all .2s; white-space: nowrap; font-family: var(--fb);
+  }
+  .ck-copy-btn:hover { background: var(--gold-md); }
+
+  .ck-success {
+    padding: 52px 32px 48px;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    text-align: center;
+  }
+  .ck-success-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(201,168,76,.1); border: 1px solid var(--gold-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; color: var(--gold);
+  }
+  .ck-success h3 { font-family: var(--fh); font-size: 1.6rem; font-weight: 800; }
+  .ck-success p { font-size: .88rem; color: var(--muted); line-height: 1.65; max-width: 340px; }
+  .ck-confirm-box {
+    background: var(--gold-lo); border: 1px solid var(--gold-md);
+    border-radius: 12px; padding: 14px 20px; text-align: left; width: 100%; max-width: 360px;
+  }
+  .ck-confirm-row {
+    display: flex; justify-content: space-between;
+    font-size: .78rem; padding: 5px 0;
+    border-bottom: 1px solid var(--gold-lo);
+  }
+  .ck-confirm-row:last-child { border-bottom: none; }
+  .ck-confirm-row span:first-child { color: var(--muted); }
+  .ck-confirm-row span:last-child { color: var(--gold); font-weight: 600; }
+
+  /* Toast */
+  .ec-toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: #111; border: 1px solid var(--gold-md);
+    border-radius: 100px; padding: 12px 22px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: .82rem; font-weight: 500;
+    box-shadow: 0 16px 40px rgba(0,0,0,.5);
+    opacity: 0; pointer-events: none; z-index: 9999;
+    transition: all .35s var(--ease); white-space: nowrap;
+  }
+  .ec-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .ec-toast-icon { color: var(--gold); font-size: .9rem; }
   :root {
     --gold:    #C9A84C;
     --gold2:   #E8C97A;
@@ -638,6 +1086,410 @@
     .sl-val-img-cell.tall { grid-row:auto; }
   }
 
+  /* ══════════════════════════════════════
+     E-COMMERCE — product grid, modals, cart, checkout
+  ══════════════════════════════════════ */
+
+  /* Uniform product grid */
+  .sl-uniform-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+  }
+  @media(max-width:1100px){ .sl-uniform-grid { grid-template-columns:repeat(3,1fr); } }
+  @media(max-width:700px) { .sl-uniform-grid { grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:440px) { .sl-uniform-grid { grid-template-columns:1fr; } }
+
+  /* Product card */
+  .sl-ucard {
+    background:var(--card);
+    border:1px solid var(--gold-md);
+    border-radius:14px; overflow:hidden;
+    display:flex; flex-direction:column;
+    transition:all .4s var(--ease);
+  }
+  .sl-ucard:hover {
+    transform:translateY(-6px);
+    border-color:var(--gold-hi);
+    box-shadow:0 24px 56px rgba(0,0,0,.55);
+  }
+  .sl-ucard-img {
+    position:relative; height:200px; overflow:hidden;
+  }
+  .sl-ucard-img img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(.55) saturate(.65);
+    transition:transform .6s var(--ease), filter .4s;
+  }
+  .sl-ucard:hover .sl-ucard-img img { transform:scale(1.07); filter:brightness(.75) saturate(.85); }
+  .sl-ucard-overlay {
+    position:absolute; inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; transition:opacity .3s;
+  }
+  .sl-ucard:hover .sl-ucard-overlay { opacity:1; }
+  .sl-quick-btn {
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.3);
+    color:#fff; font-family:var(--fb);
+    font-size:.78rem; font-weight:500;
+    padding:9px 20px; border-radius:100px;
+    cursor:pointer; backdrop-filter:blur(8px);
+    transition:all .2s;
+  }
+  .sl-quick-btn:hover { background:var(--gold); color:#000; border-color:var(--gold); }
+
+  .sl-ucard-body { padding:16px 16px 18px; flex:1; display:flex; flex-direction:column; gap:6px; }
+  .sl-ucard-body h3 { font-size:.92rem; font-weight:700; transition:color .2s; }
+  .sl-ucard:hover .sl-ucard-body h3 { color:var(--gold); }
+  .sl-ucard-footer {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-top:auto; padding-top:12px;
+    border-top:1px solid var(--gold-lo);
+  }
+  .sl-ucard-price { font-size:.78rem; color:var(--muted); }
+  .sl-ucard-price strong { color:var(--gold); font-family:var(--fh); font-size:1rem; font-weight:800; }
+
+  /* Small gold button */
+  .btn-gold-sm {
+    background:var(--gold); color:#000;
+    font-family:var(--fb); font-size:.72rem; font-weight:700;
+    border:none; border-radius:100px;
+    padding:7px 16px; cursor:pointer;
+    transition:all .25s;
+  }
+  .btn-gold-sm:hover { background:var(--gold2); transform:translateY(-1px); }
+
+  /* Cart FAB */
+  .cart-fab {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--gold-lo); border:1px solid var(--gold-md);
+    color:var(--gold); font-family:var(--fb);
+    font-size:.82rem; font-weight:600;
+    padding:10px 20px; border-radius:100px;
+    cursor:pointer; transition:all .25s;
+    position:relative;
+  }
+  .cart-fab:hover { background:var(--gold-md); border-color:var(--gold); }
+  .cart-count {
+    position:absolute; top:-6px; right:-6px;
+    width:20px; height:20px; border-radius:50%;
+    background:var(--gold); color:#000;
+    font-size:.62rem; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+    border:2px solid var(--bg);
+  }
+
+  /* ── OVERLAY BASE ── */
+  .ec-overlay {
+    position:fixed; inset:0; z-index:9000;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+    opacity:0; pointer-events:none;
+    transition:opacity .35s var(--ease);
+  }
+  .ec-overlay.open { opacity:1; pointer-events:all; }
+  .ec-backdrop {
+    position:absolute; inset:0;
+    background:rgba(0,0,0,.82); backdrop-filter:blur(16px);
+  }
+
+  /* ── PRODUCT MODAL ── */
+  .ec-modal {
+    position:relative; z-index:1;
+    width:100%; max-width:780px;
+    background:var(--card);
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:20px; overflow:hidden;
+    transform:translateY(32px) scale(.97);
+    transition:transform .4s var(--ease), opacity .35s var(--ease);
+    opacity:0;
+    max-height:92vh; overflow-y:auto;
+  }
+  .ec-overlay.open .ec-modal { transform:translateY(0) scale(1); opacity:1; }
+  .ec-modal-top-bar {
+    height:3px;
+    background:linear-gradient(90deg,var(--gold),var(--gold2));
+  }
+  .ec-close {
+    position:absolute; top:16px; right:16px; z-index:10;
+    width:36px; height:36px; border-radius:50%;
+    background:rgba(255,255,255,.06); border:1px solid var(--border);
+    color:var(--muted); font-size:.9rem; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all .2s; line-height:1;
+  }
+  .ec-close:hover { background:rgba(255,255,255,.12); color:var(--text); }
+
+  .ec-product-inner {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:0;
+  }
+  @media(max-width:620px){ .ec-product-inner { grid-template-columns:1fr; } }
+
+  .ec-product-img-wrap {
+    position:relative; overflow:hidden;
+    min-height:320px;
+  }
+  .ec-product-img-wrap img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(.65) saturate(.75);
+  }
+  .ec-badge {
+    position:absolute; top:14px; left:14px;
+    font-size:.6rem; font-weight:700; letter-spacing:.14em;
+    color:var(--gold); background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
+    border:1px solid var(--gold-md); border-radius:100px;
+    padding:4px 12px;
+  }
+
+  .ec-product-details { padding:32px 28px 28px; display:flex; flex-direction:column; gap:12px; }
+  .ec-prod-title { font-size:1.4rem; font-weight:800; letter-spacing:-.03em; line-height:1.1; }
+  .ec-prod-desc  { font-size:.82rem; color:var(--muted); line-height:1.7; }
+
+  .ec-option-group { display:flex; flex-direction:column; gap:8px; }
+  .ec-option-label { font-size:.65rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+  .ec-sel-val { color:var(--gold2); font-weight:400; text-transform:none; letter-spacing:0; }
+  .ec-chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .ec-chip {
+    padding:6px 14px; border-radius:100px;
+    background:transparent; border:1px solid var(--border);
+    color:var(--muted); font-size:.74rem; font-family:var(--fb);
+    cursor:pointer; transition:all .2s;
+  }
+  .ec-chip:hover { border-color:var(--gold-md); color:var(--text); }
+  .ec-chip.active { background:var(--gold-lo); border-color:var(--gold); color:var(--gold2); }
+
+  .ec-qty-row {
+    display:flex; align-items:center; gap:14px;
+  }
+  .ec-qty-ctrl {
+    display:flex; align-items:center;
+    border:1px solid var(--gold-md); border-radius:10px; overflow:hidden;
+  }
+  .ec-qty-ctrl button {
+    width:36px; height:36px;
+    background:var(--gold-lo); border:none;
+    color:var(--text); font-size:1rem; cursor:pointer;
+    transition:background .2s; font-family:var(--fb);
+  }
+  .ec-qty-ctrl button:hover { background:var(--gold-md); }
+  .ec-qty-ctrl span {
+    width:44px; text-align:center;
+    border-left:1px solid var(--gold-md);
+    border-right:1px solid var(--gold-md);
+    font-size:.9rem; line-height:36px; font-family:var(--fh); font-weight:700;
+  }
+  .ec-unit-price { font-size:.72rem; color:var(--muted); }
+
+  .ec-price-row { display:flex; align-items:baseline; gap:10px; }
+  .ec-price { font-family:var(--fh); font-size:1.8rem; font-weight:800; color:var(--gold); letter-spacing:-.04em; }
+  .ec-price-note { font-size:.72rem; color:var(--muted); }
+
+  .ec-add-btn { width:100%; justify-content:center; padding:14px; font-size:.9rem; }
+  .ec-trust-note { font-size:.68rem; color:var(--muted); text-align:center; line-height:1.5; }
+
+  /* ── CART DRAWER ── */
+  .cart-overlay {
+    position:fixed; inset:0; z-index:9100;
+    opacity:0; pointer-events:none;
+    transition:opacity .3s var(--ease);
+  }
+  .cart-overlay.open { opacity:1; pointer-events:all; }
+  .cart-backdrop {
+    position:absolute; inset:0;
+    background:rgba(0,0,0,.7); backdrop-filter:blur(8px);
+  }
+  .cart-drawer {
+    position:absolute; top:0; right:0; bottom:0;
+    width:min(420px,100vw);
+    background:var(--card);
+    border-left:1px solid var(--gold-md);
+    display:flex; flex-direction:column;
+    transform:translateX(100%);
+    transition:transform .4s var(--ease);
+  }
+  .cart-overlay.open .cart-drawer { transform:translateX(0); }
+
+  .cart-drawer-head {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:24px 24px 16px;
+    border-bottom:1px solid var(--gold-md);
+  }
+  .cart-drawer-head h3 { font-family:var(--fh); font-size:1.1rem; font-weight:800; display:flex; align-items:center; gap:10px; }
+  .cart-drawer-count {
+    background:var(--gold-lo); border:1px solid var(--gold-md);
+    color:var(--gold); font-size:.7rem; font-weight:700;
+    padding:2px 10px; border-radius:100px;
+  }
+
+  .cart-items { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:12px; }
+  .cart-empty { display:flex; flex-direction:column; align-items:center; justify-content:center;
+    height:100%; text-align:center; padding:40px 20px; }
+  .cart-empty p { font-size:.9rem; font-weight:600; margin-bottom:4px; }
+  .cart-empty span { font-size:.78rem; color:var(--muted); }
+
+  /* Cart item row */
+  .cart-item {
+    display:grid; grid-template-columns:64px 1fr auto;
+    gap:12px; align-items:center;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--gold-lo);
+    border-radius:12px; padding:12px;
+    transition:border-color .2s;
+  }
+  .cart-item:hover { border-color:var(--gold-md); }
+  .ci-img {
+    width:64px; height:64px; border-radius:8px; overflow:hidden;
+    border:1px solid var(--gold-md); flex-shrink:0;
+  }
+  .ci-img img { width:100%; height:100%; object-fit:cover; display:block; filter:brightness(.7); }
+  .ci-details { min-width:0; }
+  .ci-name  { font-size:.82rem; font-weight:600; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .ci-meta  { font-size:.68rem; color:var(--muted); margin-bottom:6px; }
+  .ci-qty-row { display:flex; align-items:center; gap:8px; }
+  .ci-qty-btn {
+    width:22px; height:22px; border-radius:6px;
+    background:var(--gold-lo); border:1px solid var(--gold-md);
+    color:var(--text); font-size:.8rem; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .2s;
+  }
+  .ci-qty-btn:hover { background:var(--gold-md); }
+  .ci-qty-num { font-size:.78rem; min-width:20px; text-align:center; }
+  .ci-price { font-family:var(--fh); font-weight:800; color:var(--gold); font-size:.95rem; white-space:nowrap; }
+  .ci-remove {
+    background:none; border:none; color:rgba(255,255,255,.2);
+    font-size:.85rem; cursor:pointer; padding:4px; line-height:1;
+    transition:color .2s; align-self:flex-start;
+  }
+  .ci-remove:hover { color:rgba(255,80,80,.7); }
+
+  .cart-drawer-foot { padding:16px; border-top:1px solid var(--gold-md); }
+  .cart-subtotal { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:.9rem; }
+  .cart-subtotal span:last-child { font-family:var(--fh); font-weight:800; color:var(--gold); font-size:1.1rem; }
+  .cart-shipping-note { font-size:.7rem; color:var(--muted); margin-bottom:12px; }
+
+  /* ── CHECKOUT MODAL ── */
+  .ck-steps {
+    display:flex; align-items:center;
+    padding:20px 32px 0; gap:0;
+  }
+  .ck-step {
+    display:flex; align-items:center; gap:8px;
+    font-size:.72rem; font-weight:600; color:var(--muted);
+    flex-shrink:0;
+  }
+  .ck-step span {
+    width:24px; height:24px; border-radius:50%;
+    background:var(--border); color:var(--muted);
+    display:flex; align-items:center; justify-content:center;
+    font-size:.68rem; font-weight:700;
+    transition:all .3s;
+  }
+  .ck-step.active { color:var(--gold); }
+  .ck-step.active span { background:var(--gold); color:#000; }
+  .ck-step.done span { background:rgba(46,204,113,.2); color:#2ecc71; }
+  .ck-step-line { flex:1; height:1px; background:var(--border); margin:0 8px; }
+
+  .ck-panel { padding-top:8px; }
+  .ck-panel-title { font-family:var(--fh); font-size:1.3rem; font-weight:800; margin-bottom:4px; }
+  .ck-panel-sub { font-size:.82rem; color:var(--muted); margin-bottom:16px; }
+
+  /* Order mini summary */
+  .ck-order-mini { margin:0 32px 16px; background:var(--gold-lo); border:1px solid var(--gold-md); border-radius:var(--r); padding:14px 16px; display:flex; flex-direction:column; gap:6px; max-height:130px; overflow-y:auto; }
+  .ck-mini-row { display:flex; justify-content:space-between; font-size:.8rem; }
+  .ck-mini-row span:first-child { color:var(--muted); }
+  .ck-mini-row span:last-child  { color:var(--gold); font-weight:600; }
+
+  /* Form */
+  .ck-form { padding:0 32px; display:flex; flex-direction:column; gap:12px; margin-bottom:12px; }
+  .ck-row  { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media(max-width:560px){ .ck-row { grid-template-columns:1fr; } }
+  .ck-field { display:flex; flex-direction:column; gap:5px; }
+  .ck-field label { font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+  .ck-field input, .ck-field select, .ck-field textarea {
+    background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1);
+    border-radius:10px; padding:11px 13px;
+    color:var(--text); font-family:var(--fb); font-size:.85rem; font-weight:300;
+    outline:none; width:100%; box-sizing:border-box;
+    transition:border-color .25s, box-shadow .25s;
+  }
+  .ck-field select { appearance:none; -webkit-appearance:none; cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.25)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:34px; }
+  .ck-field select option { background:#1a1a1a; }
+  .ck-field textarea { resize:vertical; min-height:70px; line-height:1.6; }
+  .ck-field input::placeholder, .ck-field textarea::placeholder { color:rgba(255,255,255,.2); }
+  .ck-field input:focus, .ck-field select:focus, .ck-field textarea:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,168,76,.1); }
+  .ck-field input.err { border-color:rgba(255,80,80,.5); box-shadow:0 0 0 3px rgba(255,80,80,.08); }
+
+  /* Footer nav */
+  .ck-foot { display:flex; justify-content:space-between; align-items:center; padding:16px 32px 28px; }
+
+  /* Amount box */
+  .ck-amount-box { margin:0 32px 16px; background:rgba(201,168,76,.06); border:1px solid var(--gold-md); border-radius:var(--r); padding:14px 18px; display:flex; justify-content:space-between; align-items:center; }
+  .ck-amount-label { font-size:.7rem; color:var(--muted); }
+  .ck-amount-total { font-family:var(--fh); font-size:1.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em; }
+
+  /* Bank options */
+  .ck-banks { display:flex; flex-direction:column; gap:8px; }
+  .ck-option-label { font-size:.65rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+  .ck-bank-opt {
+    display:flex; align-items:center; gap:12px;
+    background:rgba(255,255,255,.03); border:1px solid var(--border);
+    border-radius:12px; padding:12px 14px;
+    cursor:pointer; transition:all .25s; position:relative;
+  }
+  .ck-bank-opt:hover { border-color:var(--gold-md); background:var(--gold-lo); }
+  .ck-bank-opt.selected { border-color:var(--gold); background:var(--gold-lo); }
+  .ck-bank-radio {
+    width:18px; height:18px; border-radius:50%;
+    border:2px solid var(--border); flex-shrink:0;
+    transition:all .2s;
+  }
+  .ck-bank-opt.selected .ck-bank-radio { border-color:var(--gold); background:var(--gold); box-shadow:inset 0 0 0 3px var(--card); }
+  .ck-bank-icon { font-size:1.2rem; flex-shrink:0; }
+  .ck-bank-info { display:flex; flex-direction:column; flex:1; }
+  .ck-bank-info strong { font-size:.85rem; }
+  .ck-bank-info span   { font-size:.72rem; color:var(--muted); font-family:monospace; letter-spacing:.05em; }
+  .ck-bank-tick { color:var(--gold); font-weight:700; opacity:0; transition:opacity .2s; }
+  .ck-bank-opt.selected .ck-bank-tick { opacity:1; }
+
+  /* Transfer details box */
+  .ck-transfer-box { background:rgba(0,0,0,.3); border:1px solid var(--gold-md); border-radius:var(--r); padding:16px 18px; margin-top:14px; }
+  .ck-transfer-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--gold-lo); font-size:.82rem; }
+  .ck-transfer-row:last-child { border-bottom:none; padding-bottom:0; }
+  .ck-transfer-row span:first-child { color:var(--muted); }
+  .ck-transfer-row span:last-child, .ck-transfer-row div { font-weight:500; font-family:monospace; letter-spacing:.04em; }
+  .ck-copy-btn { background:var(--gold-lo); border:1px solid var(--gold-md); border-radius:6px; padding:3px 10px; font-size:.62rem; color:var(--gold); cursor:pointer; transition:all .2s; white-space:nowrap; }
+  .ck-copy-btn:hover { background:var(--gold-md); }
+
+  /* Step 3 success */
+  .ck-success { padding:48px 32px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:14px; }
+  .ck-success-icon { width:64px; height:64px; border-radius:50%; background:rgba(46,204,113,.1); border:1px solid rgba(46,204,113,.25); display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
+  .ck-success h3 { font-family:var(--fh); font-size:1.5rem; font-weight:800; }
+  .ck-success p  { font-size:.86rem; color:var(--muted); line-height:1.65; max-width:340px; }
+  .ck-confirm-box { background:var(--gold-lo); border:1px solid var(--gold-md); border-radius:var(--r); padding:14px 18px; width:100%; max-width:360px; text-align:left; font-size:.8rem; }
+  .ck-confirm-row { display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid var(--gold-lo); }
+  .ck-confirm-row:last-child { border-bottom:none; }
+  .ck-confirm-row span:first-child { color:var(--muted); }
+  .ck-confirm-row span:last-child  { color:var(--text); font-weight:500; }
+
+  /* Toast */
+  .ec-toast {
+    position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:#111; border:1px solid var(--gold-md);
+    border-radius:100px; padding:10px 22px;
+    display:flex; align-items:center; gap:10px;
+    font-size:.82rem; font-weight:500;
+    box-shadow:0 16px 40px rgba(0,0,0,.5);
+    opacity:0; pointer-events:none; white-space:nowrap;
+    transition:all .35s var(--ease); z-index:9999;
+  }
+  .ec-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+  .ec-toast-icon { color:var(--gold); font-size:1rem; }
+
   </style>
 </head>
 <body>
@@ -858,7 +1710,7 @@
 
 
   <!-- ══════════════════════════════════════
-       PRODUCTS
+       PRODUCTS — uniform 7-item grid
   ══════════════════════════════════════ -->
   <section class="sl-products" id="products">
     <div class="container">
@@ -866,151 +1718,452 @@
       <div class="sl-prod-hdr rv">
         <div>
           <div class="sl-tag">What We Make</div>
-          <h2>Four categories.<br />One standard.</h2>
+          <h2>Seven products.<br />One standard.</h2>
         </div>
-        <p>Every product is designed, sampled, and quality-checked before it leaves with your name on it. No shortcuts. Ever.</p>
+        <p>Every item is designed, sampled, and quality-checked. Pick what you need — add it to your cart and we'll handle the rest.</p>
       </div>
 
-      <!-- FEATURED ROW: T-shirts large + Mugs & Prints stacked -->
-      <div class="sl-feat-row rv">
-
-        <!-- Large: Apparel -->
-        <div class="sl-feat-main" style="cursor:pointer" onclick="location.href='shop-apparel.html'">
-          <div class="sl-feat-main-img">
-            <img
-              src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=1000&q=80&auto=format&fit=crop"
-              alt="Premium branded apparel — Assalamualaikum"
-              loading="lazy"
-            />
-          </div>
-          <div class="sl-feat-overlay">
-            <span class="sl-feat-num">01 — APPAREL</span>
-            <h3>T-Shirts, Hoodies<br />&amp; Caps</h3>
-            <p>Heavyweight blanks. Premium print methods. Clothes people actually want to wear — because wearing your brand shouldn't feel like an obligation.</p>
-            <div class="sl-feat-chips">
-              <span class="sl-chip">Screen Print</span>
-              <span class="sl-chip">Embroidery</span>
-              <span class="sl-chip">DTG Print</span>
-              <span class="sl-chip">Custom Labels</span>
-            </div>
-            <a href="shop-apparel.html" class="btn btn-gold" style="margin-top:18px;padding:10px 22px;font-size:.8rem;display:inline-flex">Shop Apparel →</a>
-          </div>
-        </div>
-
-        <!-- Stacked right: Mugs + Premium Prints -->
-        <div class="sl-feat-stack">
-
-          <div class="sl-feat-sm" style="cursor:pointer" onclick="location.href='shop-mugs.html'">
-            <div class="sl-feat-sm-img">
-              <img
-                src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&q=80&auto=format&fit=crop"
-                alt="Branded ceramic mugs"
-                loading="lazy"
-              />
-            </div>
-            <div class="sl-feat-sm-body">
-              <span class="sl-feat-num" style="font-size:.6rem;padding:2px 9px">02 — MUGS</span>
-              <h3>Mugs &amp; Drinkware</h3>
-              <span class="sl-prod-sub">Ceramic · Travel Cups · Tumblers</span>
-              <p>Your brand at the morning ritual — the most repeated daily moment in your client's life.</p>
-              <div class="sl-feat-chips"><span class="sl-chip">Ceramic</span><span class="sl-chip">Travel Cup</span><span class="sl-chip">Gift Packaging</span></div>
-            </div>
-          </div>
-
-          <div class="sl-feat-sm" style="cursor:pointer" onclick="location.href='shop-prints.html'">
-            <div class="sl-feat-sm-img">
-              <img
-                src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&q=80&auto=format&fit=crop"
-                alt="Fine art premium prints"
-                loading="lazy"
-              />
-            </div>
-            <div class="sl-feat-sm-body">
-              <span class="sl-feat-num" style="font-size:.6rem;padding:2px 9px">04 — PRINTS</span>
-              <h3>Premium Prints</h3>
-              <span class="sl-prod-sub">Fine Art · Posters · Framed</span>
-              <p>Gallery-quality pieces for spaces where brand culture is built — offices, studios, waiting rooms.</p>
-              <div class="sl-feat-chips"><span class="sl-chip">Giclée</span><span class="sl-chip">Archival</span><span class="sl-chip">Custom Frame</span></div>
-            </div>
-          </div>
-
-        </div>
+      <!-- Cart badge -->
+      <div style="display:flex;justify-content:flex-end;margin-bottom:28px">
+        <button class="cart-fab" onclick="openCart()" id="cartFab">
+          🛒 <span id="cartLabel">Cart</span>
+          <span class="cart-count" id="cartCount" style="display:none">0</span>
+        </button>
       </div>
 
-      <!-- SECONDARY ROW: 4 card grid -->
-      <div class="sl-prod-row rv" style="margin-top:18px">
+      <!-- 7-item uniform grid -->
+      <div class="sl-uniform-grid rv">
 
-        <div class="sl-prod-card" style="cursor:pointer" onclick="location.href='shop-stickers.html'">
-          <div class="sl-prod-img">
-            <span class="sl-prod-badge">Stickers — 03</span>
-            <img
-              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=75&auto=format&fit=crop"
-              alt="Die-cut stickers"
-              loading="lazy"
-            />
+        <!-- 01 Apparel -->
+        <div class="sl-ucard">
+          <div class="sl-ucard-img">
+            <span class="sl-prod-badge">01 — APPAREL</span>
+            <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=700&q=80&auto=format&fit=crop" alt="T-Shirts, Hoodies & Caps" loading="lazy"/>
+            <div class="sl-ucard-overlay">
+              <button class="sl-quick-btn" onclick="openProduct(0)">Quick View</button>
+            </div>
           </div>
-          <div class="sl-prod-body">
+          <div class="sl-ucard-body">
+            <h3>T-Shirts, Hoodies &amp; Caps</h3>
+            <span class="sl-prod-sub">Screen Print · Embroidery · DTG</span>
+            <div class="sl-ucard-footer">
+              <span class="sl-ucard-price">from <strong>RM 89</strong></span>
+              <button class="btn-gold-sm" onclick="openProduct(0)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 Mugs -->
+        <div class="sl-ucard">
+          <div class="sl-ucard-img">
+            <span class="sl-prod-badge">02 — MUGS</span>
+            <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=700&q=80&auto=format&fit=crop" alt="Mugs & Drinkware" loading="lazy"/>
+            <div class="sl-ucard-overlay">
+              <button class="sl-quick-btn" onclick="openProduct(1)">Quick View</button>
+            </div>
+          </div>
+          <div class="sl-ucard-body">
+            <h3>Mugs &amp; Drinkware</h3>
+            <span class="sl-prod-sub">Ceramic · Travel Cup · Tumbler</span>
+            <div class="sl-ucard-footer">
+              <span class="sl-ucard-price">from <strong>RM 45</strong></span>
+              <button class="btn-gold-sm" onclick="openProduct(1)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 Prints -->
+        <div class="sl-ucard">
+          <div class="sl-ucard-img">
+            <span class="sl-prod-badge">03 — PRINTS</span>
+            <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=700&q=80&auto=format&fit=crop" alt="Premium Prints" loading="lazy"/>
+            <div class="sl-ucard-overlay">
+              <button class="sl-quick-btn" onclick="openProduct(2)">Quick View</button>
+            </div>
+          </div>
+          <div class="sl-ucard-body">
+            <h3>Premium Prints</h3>
+            <span class="sl-prod-sub">Giclée · Archival · Framed</span>
+            <div class="sl-ucard-footer">
+              <span class="sl-ucard-price">from <strong>RM 120</strong></span>
+              <button class="btn-gold-sm" onclick="openProduct(2)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 Stickers -->
+        <div class="sl-ucard">
+          <div class="sl-ucard-img">
+            <span class="sl-prod-badge">04 — STICKERS</span>
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80&auto=format&fit=crop" alt="Die-Cut Stickers" loading="lazy"/>
+            <div class="sl-ucard-overlay">
+              <button class="sl-quick-btn" onclick="openProduct(3)">Quick View</button>
+            </div>
+          </div>
+          <div class="sl-ucard-body">
             <h3>Die-Cut Stickers</h3>
             <span class="sl-prod-sub">Vinyl · Holographic · Kiss-Cut</span>
-            <p>Small format, huge reach. Stickers travel wherever your audience goes — laptops, bottles, walls, packaging.</p>
-            <div class="sl-prod-chips"><span class="sl-chip">Vinyl</span><span class="sl-chip">Holographic</span><span class="sl-chip">Kiss-Cut</span></div>
+            <div class="sl-ucard-footer">
+              <span class="sl-ucard-price">from <strong>RM 25</strong></span>
+              <button class="btn-gold-sm" onclick="openProduct(3)">Add to Cart</button>
+            </div>
           </div>
         </div>
 
-        <div class="sl-prod-card" style="cursor:pointer" onclick="location.href='shop-giftsets.html'">
-          <div class="sl-prod-img">
-            <span class="sl-prod-badge">Gift Sets</span>
-            <img
-              src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=700&q=75&auto=format&fit=crop"
-              alt="Brand gift sets"
-              loading="lazy"
-            />
+        <!-- 05 Gift Box -->
+        <div class="sl-ucard">
+          <div class="sl-ucard-img">
+            <span class="sl-prod-badge">05 — GIFT BOX</span>
+            <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=700&q=80&auto=format&fit=crop" alt="Custom Gift Box" loading="lazy"/>
+            <div class="sl-ucard-overlay">
+              <button class="sl-quick-btn" onclick="openProduct(4)">Quick View</button>
+            </div>
           </div>
-          <div class="sl-prod-body">
-            <h3>Branded Gift Sets</h3>
-            <span class="sl-prod-sub">Curated · Boxed · Custom</span>
-            <p>Combine apparel, drinkware, stickers, and prints into a single premium gift set with custom packaging.</p>
-            <div class="sl-prod-chips"><span class="sl-chip">Curated Box</span><span class="sl-chip">Custom Insert</span><span class="sl-chip">Ribbon</span></div>
+          <div class="sl-ucard-body">
+            <h3>Custom Gift Box</h3>
+            <span class="sl-prod-sub">Rigid Lid · Kraft · Drawer Box</span>
+            <div class="sl-ucard-footer">
+              <span class="sl-ucard-price">from <strong>RM 35</strong></span>
+              <button class="btn-gold-sm" onclick="openProduct(4)">Add to Cart</button>
+            </div>
           </div>
         </div>
 
-        <div class="sl-prod-card" style="cursor:pointer" onclick="location.href='shop-packaging.html'">
-          <div class="sl-prod-img">
-            <span class="sl-prod-badge">Packaging</span>
-            <img
-              src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=700&q=75&auto=format&fit=crop"
-              alt="Custom product packaging"
-              loading="lazy"
-            />
+        <!-- 06 Packaging -->
+        <div class="sl-ucard">
+          <div class="sl-ucard-img">
+            <span class="sl-prod-badge">06 — PACKAGING</span>
+            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=700&q=80&auto=format&fit=crop" alt="Custom Packaging" loading="lazy"/>
+            <div class="sl-ucard-overlay">
+              <button class="sl-quick-btn" onclick="openProduct(5)">Quick View</button>
+            </div>
           </div>
-          <div class="sl-prod-body">
+          <div class="sl-ucard-body">
             <h3>Custom Packaging</h3>
             <span class="sl-prod-sub">Boxes · Bags · Labels</span>
-            <p>The unboxing experience is your brand's handshake. We design and produce packaging that makes that moment count.</p>
-            <div class="sl-prod-chips"><span class="sl-chip">Rigid Box</span><span class="sl-chip">Tissue Paper</span><span class="sl-chip">Sticker Seal</span></div>
+            <div class="sl-ucard-footer">
+              <span class="sl-ucard-price">from <strong>RM 35</strong></span>
+              <button class="btn-gold-sm" onclick="openProduct(5)">Add to Cart</button>
+            </div>
           </div>
         </div>
 
-        <div class="sl-prod-card" style="cursor:pointer" onclick="location.href='shop-notebooks.html'">
-          <div class="sl-prod-img">
-            <span class="sl-prod-badge">Notebooks</span>
-            <img
-              src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=700&q=75&auto=format&fit=crop"
-              alt="Premium branded notebooks"
-              loading="lazy"
-            />
+        <!-- 07 Notebooks -->
+        <div class="sl-ucard">
+          <div class="sl-ucard-img">
+            <span class="sl-prod-badge">07 — NOTEBOOKS</span>
+            <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=700&q=80&auto=format&fit=crop" alt="Notebooks & Stationery" loading="lazy"/>
+            <div class="sl-ucard-overlay">
+              <button class="sl-quick-btn" onclick="openProduct(6)">Quick View</button>
+            </div>
           </div>
-          <div class="sl-prod-body">
+          <div class="sl-ucard-body">
             <h3>Notebooks &amp; Stationery</h3>
             <span class="sl-prod-sub">Hardcover · Softcover · Pens</span>
-            <p>From branded notebooks to custom pens and letterheads — the desk set that keeps your identity front and centre.</p>
-            <div class="sl-prod-chips"><span class="sl-chip">Hardcover</span><span class="sl-chip">Foil Stamp</span><span class="sl-chip">Lined / Dot</span></div>
+            <div class="sl-ucard-footer">
+              <span class="sl-ucard-price">from <strong>RM 65</strong></span>
+              <button class="btn-gold-sm" onclick="openProduct(6)">Add to Cart</button>
+            </div>
           </div>
         </div>
 
       </div>
     </div>
   </section>
+
+
+  <!-- ══════════════════════════════════════
+       PRODUCT QUICK-VIEW MODAL
+  ══════════════════════════════════════ -->
+  <div class="ec-overlay" id="productOverlay">
+    <div class="ec-backdrop" onclick="closeProduct()"></div>
+    <div class="ec-modal" id="productModal">
+      <div class="ec-modal-top-bar"></div>
+      <button class="ec-close" onclick="closeProduct()">✕</button>
+      <div class="ec-product-inner">
+        <div class="ec-product-img-wrap">
+          <img id="pv-img" src="" alt=""/>
+          <span class="ec-badge" id="pv-badge"></span>
+        </div>
+        <div class="ec-product-details">
+          <div class="sl-tag" id="pv-cat"></div>
+          <h2 class="ec-prod-title" id="pv-title"></h2>
+          <p class="ec-prod-desc" id="pv-desc"></p>
+
+          <!-- Variant selector -->
+          <div class="ec-option-group" id="pv-variants-wrap">
+            <div class="ec-option-label">Variant <span class="ec-sel-val" id="pv-variant-val"></span></div>
+            <div class="ec-chips" id="pv-variants"></div>
+          </div>
+
+          <!-- Qty -->
+          <div class="ec-qty-row">
+            <div class="ec-option-label" style="margin:0">Quantity</div>
+            <div class="ec-qty-ctrl">
+              <button onclick="pvQty(-1)">−</button>
+              <span id="pvQtyVal">1</span>
+              <button onclick="pvQty(1)">+</button>
+            </div>
+            <span class="ec-unit-price" id="pv-unit-price"></span>
+          </div>
+
+          <!-- Price -->
+          <div class="ec-price-row">
+            <span class="ec-price" id="pv-total-price"></span>
+            <span class="ec-price-note">excl. shipping</span>
+          </div>
+
+          <button class="btn btn-gold ec-add-btn" onclick="addToCartFromPV()">
+            🛒 Add to Cart
+          </button>
+          <p class="ec-trust-note">✦ No MOQ &nbsp;·&nbsp; Proof before production &nbsp;·&nbsp; Ships in 7–10 days</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       CART DRAWER
+  ══════════════════════════════════════ -->
+  <div class="cart-overlay" id="cartOverlay">
+    <div class="cart-backdrop" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+      <div class="cart-drawer-head">
+        <h3>Your Cart <span id="cartItemCount" class="cart-drawer-count">0</span></h3>
+        <button class="ec-close" style="position:static;width:32px;height:32px;font-size:.85rem" onclick="closeCart()">✕</button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <div class="cart-empty" id="cartEmpty">
+          <div style="font-size:2rem;margin-bottom:10px">🛒</div>
+          <p>Your cart is empty</p>
+          <span>Browse products above and add items</span>
+        </div>
+      </div>
+      <div class="cart-drawer-foot" id="cartFoot" style="display:none">
+        <div class="cart-subtotal">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">RM 0</span>
+        </div>
+        <div class="cart-shipping-note">🚚 Shipping calculated at checkout</div>
+        <button class="btn btn-gold" style="width:100%;justify-content:center;padding:15px;font-size:.92rem;margin-top:8px" onclick="goCheckout()">
+          Proceed to Checkout →
+        </button>
+        <button class="btn btn-gold-g" style="width:100%;justify-content:center;padding:12px;font-size:.82rem;margin-top:8px" onclick="closeCart()">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       CHECKOUT MODAL — 3 steps
+  ══════════════════════════════════════ -->
+  <div class="ec-overlay" id="checkoutOverlay" style="z-index:9200">
+    <div class="ec-backdrop" onclick=""></div>
+    <div class="ec-modal" style="max-width:620px;max-height:92vh;overflow-y:auto">
+      <div class="ec-modal-top-bar"></div>
+
+      <!-- Step indicator -->
+      <div class="ck-steps" id="ckSteps">
+        <div class="ck-step active" id="step-ind-1"><span>1</span> Details</div>
+        <div class="ck-step-line"></div>
+        <div class="ck-step" id="step-ind-2"><span>2</span> Payment</div>
+        <div class="ck-step-line"></div>
+        <div class="ck-step" id="step-ind-3"><span>3</span> Confirm</div>
+      </div>
+
+      <!-- ── STEP 1: Delivery Details ── -->
+      <div id="ck-step1" class="ck-panel">
+        <div style="padding:0 32px 8px">
+          <h3 class="ck-panel-title">Delivery Details</h3>
+          <p class="ck-panel-sub">Tell us where to send your order.</p>
+        </div>
+
+        <!-- Order summary mini -->
+        <div class="ck-order-mini" id="ckMini"></div>
+
+        <div class="ck-form">
+          <div class="ck-row">
+            <div class="ck-field">
+              <label>Full Name *</label>
+              <input type="text" id="ck-name" placeholder="e.g. Amirah Razali"/>
+            </div>
+            <div class="ck-field">
+              <label>Email *</label>
+              <input type="email" id="ck-email" placeholder="you@email.com"/>
+            </div>
+          </div>
+          <div class="ck-field">
+            <label>Phone / WhatsApp *</label>
+            <input type="tel" id="ck-phone" placeholder="+60 12-345 6789"/>
+          </div>
+          <div class="ck-field">
+            <label>Street Address *</label>
+            <input type="text" id="ck-addr1" placeholder="No. 12, Jalan Ampang"/>
+          </div>
+          <div class="ck-row">
+            <div class="ck-field">
+              <label>City *</label>
+              <input type="text" id="ck-city" placeholder="Kuala Lumpur"/>
+            </div>
+            <div class="ck-field">
+              <label>Postcode *</label>
+              <input type="text" id="ck-post" placeholder="50450"/>
+            </div>
+          </div>
+          <div class="ck-field">
+            <label>State</label>
+            <select id="ck-state">
+              <option value="">— Select state —</option>
+              <option>Kuala Lumpur</option><option>Selangor</option><option>Johor</option>
+              <option>Penang</option><option>Perak</option><option>Kedah</option>
+              <option>Kelantan</option><option>Terengganu</option><option>Pahang</option>
+              <option>Negeri Sembilan</option><option>Melaka</option><option>Perlis</option>
+              <option>Sabah</option><option>Sarawak</option><option>Putrajaya</option><option>Labuan</option>
+              <option>Other / International</option>
+            </select>
+          </div>
+          <div class="ck-field">
+            <label>Artwork / Notes</label>
+            <textarea id="ck-notes" placeholder="Any special requests, colour preferences, or artwork details…" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="ck-foot">
+          <span></span>
+          <button class="btn btn-gold" onclick="goStep(2)" style="padding:13px 28px">Next: Payment →</button>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: Payment ── -->
+      <div id="ck-step2" class="ck-panel" style="display:none">
+        <div style="padding:0 32px 8px">
+          <h3 class="ck-panel-title">Online Banking Payment</h3>
+          <p class="ck-panel-sub">Transfer to one of the accounts below, then upload your receipt.</p>
+        </div>
+
+        <!-- Amount box -->
+        <div class="ck-amount-box" id="ckAmountBox"></div>
+
+        <!-- Bank options -->
+        <div style="padding:0 32px">
+          <div class="ck-option-label" style="margin-bottom:10px">Choose your bank</div>
+          <div class="ck-banks" id="ckBanks">
+
+            <label class="ck-bank-opt" onclick="selectBank(this,'Maybank2U','5621 4400 1234','SALAAM by StudioTaha Sdn Bhd')">
+              <input type="radio" name="bank" value="maybank" style="display:none"/>
+              <span class="ck-bank-radio"></span>
+              <span class="ck-bank-icon">🏦</span>
+              <span class="ck-bank-info">
+                <strong>Maybank2U</strong>
+                <span>5621 4400 1234</span>
+              </span>
+              <span class="ck-bank-tick">✓</span>
+            </label>
+
+            <label class="ck-bank-opt" onclick="selectBank(this,'CIMB Clicks','7012 9983 5610','SALAAM by StudioTaha Sdn Bhd')">
+              <input type="radio" name="bank" value="cimb" style="display:none"/>
+              <span class="ck-bank-radio"></span>
+              <span class="ck-bank-icon">🏦</span>
+              <span class="ck-bank-info">
+                <strong>CIMB Clicks</strong>
+                <span>7012 9983 5610</span>
+              </span>
+              <span class="ck-bank-tick">✓</span>
+            </label>
+
+            <label class="ck-bank-opt" onclick="selectBank(this,'RHB Now','2651 0047 8833','SALAAM by StudioTaha Sdn Bhd')">
+              <input type="radio" name="bank" value="rhb" style="display:none"/>
+              <span class="ck-bank-radio"></span>
+              <span class="ck-bank-icon">🏦</span>
+              <span class="ck-bank-info">
+                <strong>RHB Now</strong>
+                <span>2651 0047 8833</span>
+              </span>
+              <span class="ck-bank-tick">✓</span>
+            </label>
+
+            <label class="ck-bank-opt" onclick="selectBank(this,'DuitNow QR','salaamstudiotaha','SALAAM by StudioTaha')">
+              <input type="radio" name="bank" value="duitnow" style="display:none"/>
+              <span class="ck-bank-radio"></span>
+              <span class="ck-bank-icon">📱</span>
+              <span class="ck-bank-info">
+                <strong>DuitNow QR / Transfer</strong>
+                <span>salaamstudiotaha</span>
+              </span>
+              <span class="ck-bank-tick">✓</span>
+            </label>
+
+          </div>
+
+          <!-- Transfer details (shown after bank selected) -->
+          <div class="ck-transfer-box" id="ckTransferBox" style="display:none">
+            <div class="ck-transfer-row">
+              <span>Account Name</span>
+              <span id="td-name"></span>
+            </div>
+            <div class="ck-transfer-row">
+              <span>Bank</span>
+              <span id="td-bank"></span>
+            </div>
+            <div class="ck-transfer-row">
+              <span>Account / ID</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span id="td-acc"></span>
+                <button class="ck-copy-btn" onclick="copyText(document.getElementById('td-acc').textContent)">Copy</button>
+              </div>
+            </div>
+            <div class="ck-transfer-row" style="border:none;padding-bottom:0">
+              <span>Amount</span>
+              <strong style="color:var(--gold);font-size:1.05rem" id="td-amount"></strong>
+            </div>
+          </div>
+
+          <!-- Receipt upload -->
+          <div class="ck-field" style="margin-top:18px">
+            <label>Payment Reference / Receipt No. *</label>
+            <input type="text" id="ck-receipt" placeholder="e.g. TXN202501234 or last 6 digits of transfer"/>
+          </div>
+          <p style="font-size:.72rem;color:var(--muted);margin-top:8px;line-height:1.55">
+            💡 After transferring, enter your reference number above.
+            You can also WhatsApp your screenshot to <strong style="color:var(--gold2)">+60 12-345 6789</strong>.
+          </p>
+        </div>
+
+        <div class="ck-foot">
+          <button class="btn btn-gold-g" onclick="goStep(1)" style="padding:12px 22px;font-size:.85rem">← Back</button>
+          <button class="btn btn-gold" onclick="goStep(3)" style="padding:13px 28px">Confirm Order →</button>
+        </div>
+      </div>
+
+      <!-- ── STEP 3: Confirmation ── -->
+      <div id="ck-step3" class="ck-panel" style="display:none">
+        <div class="ck-success">
+          <div class="ck-success-icon">✦</div>
+          <h3>Order Confirmed!</h3>
+          <p>Thank you, <strong id="ck-confirm-name"></strong>. Your order has been received and payment is being verified.</p>
+          <div class="ck-confirm-box" id="ckConfirmBox"></div>
+          <p style="font-size:.82rem;color:var(--muted);line-height:1.65;max-width:340px;text-align:center">
+            We'll send your proof to <strong id="ck-confirm-email" style="color:var(--gold2)"></strong> within 1 business day.
+            Production begins once payment is confirmed.
+          </p>
+          <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center">
+            <button class="btn btn-gold" onclick="closeCheckout();resetCart()" style="padding:12px 24px;font-size:.86rem">Done</button>
+            <a href="#products" class="btn btn-gold-g" onclick="closeCheckout();resetCart()" style="padding:12px 24px;font-size:.86rem">Shop More</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Cart added toast -->
+  <div class="ec-toast" id="ecToast">
+    <span class="ec-toast-icon">✓</span>
+    <span id="ecToastMsg">Added to cart</span>
+  </div>
 
 
   <!-- ══════════════════════════════════════
@@ -1204,13 +2357,11 @@
 
 
   <script>
-    /* Sticky nav */
+    /* ── Sticky nav ── */
     const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
 
-    /* Scroll reveal */
+    /* ── Scroll reveal ── */
     function revealEl(el) { el.classList.add('vi'); }
     function initReveal() {
       const els = document.querySelectorAll('.rv');
@@ -1220,13 +2371,457 @@
       }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
       els.forEach(el => {
         const r = el.getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) { revealEl(el); }
-        else { ro.observe(el); }
+        (r.top < window.innerHeight && r.bottom > 0) ? revealEl(el) : ro.observe(el);
       });
     }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initReveal);
-    } else { initReveal(); }
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', initReveal) : initReveal();
+
+    /* ══════════════════════════════════════
+       PRODUCT CATALOGUE
+    ══════════════════════════════════════ */
+    const PRODUCTS = [
+      {
+        id:0, num:'01 — APPAREL', cat:'Apparel',
+        name:'T-Shirts, Hoodies & Caps',
+        desc:'Heavyweight blanks, premium print methods. Screen print, embroidery, DTG — clothes people actually want to wear.',
+        img:'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=900&q=80&auto=format&fit=crop',
+        basePrice:89,
+        optGroups:[
+          { label:'Type',         opts:['T-Shirt','Hoodie','Cap','Polo'] },
+          { label:'Print Method', opts:['Screen Print','DTG Print','Embroidery','Heat Transfer'] },
+          { label:'Size',         opts:['XS','S','M','L','XL','XXL','3XL'] },
+        ]
+      },
+      {
+        id:1, num:'02 — MUGS', cat:'Mugs & Drinkware',
+        name:'Ceramic Mugs & Tumblers',
+        desc:'Your brand at the morning ritual. Ceramic mugs, travel cups, and double-wall tumblers — food-safe, dishwasher-safe, gift-box ready.',
+        img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=900&q=80&auto=format&fit=crop',
+        basePrice:45,
+        optGroups:[
+          { label:'Type',      opts:['Ceramic Mug 330ml','Large Mug 450ml','Travel Cup','Tumbler 500ml'] },
+          { label:'Print',     opts:['Full Wrap Print','One-Side Print','Laser Engraved'] },
+          { label:'Packaging', opts:['Standard Box','Gift Box + Ribbon'] },
+        ]
+      },
+      {
+        id:2, num:'03 — PRINTS', cat:'Premium Prints',
+        name:'Fine Art Prints & Posters',
+        desc:'Gallery-quality giclée on archival paper. 80-year fade guarantee. Available framed or rolled — for offices, studios, and spaces that mean something.',
+        img:'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=900&q=80&auto=format&fit=crop',
+        basePrice:120,
+        optGroups:[
+          { label:'Size',    opts:['A3 Poster','A2 Poster','A1 Poster','Square 50×50cm'] },
+          { label:'Paper',   opts:['Archival Matte','Lustre Photo','Canvas','Metallic'] },
+          { label:'Framing', opts:['No Frame','Black Frame','White Frame','Oak Frame'] },
+        ]
+      },
+      {
+        id:3, num:'04 — STICKERS', cat:'Stickers & Labels',
+        name:'Die-Cut & Holographic Stickers',
+        desc:'Small format, huge reach. Die-cut vinyl, kiss-cut sheets, and holographic finishes. Weatherproof, UV-resistant, dishwasher-safe.',
+        img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80&auto=format&fit=crop',
+        basePrice:25,
+        optGroups:[
+          { label:'Type',     opts:['Die-Cut Vinyl','Kiss-Cut Sheet','Holographic','Clear Vinyl','Label Roll'] },
+          { label:'Size',     opts:['5cm','8cm','10cm','Custom'] },
+          { label:'Quantity', opts:['10 pcs','25 pcs','50 pcs','100 pcs','250 pcs'] },
+        ]
+      },
+      {
+        id:4, num:'05 — GIFT BOX', cat:'Custom Gift Box',
+        name:'Custom Branded Gift Box',
+        desc:'A single premium gift box — designed, printed, and finished to carry your brand with intention. Rigid lid, drawer, or kraft styles with custom wrap.',
+        img:'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=900&q=80&auto=format&fit=crop',
+        basePrice:35,
+        optGroups:[
+          { label:'Style',  opts:['Rigid Lid Box','Drawer Box','Kraft Box','Mailer Box'] },
+          { label:'Print',  opts:['Full CMYK Print','Foil Stamp','Deboss / Emboss','Unprinted + Sticker'] },
+          { label:'Extras', opts:['Tissue Paper','Branded Ribbon','Insert Card','Shredded Fill'] },
+        ]
+      },
+      {
+        id:5, num:'06 — PACKAGING', cat:'Custom Packaging',
+        name:'Boxes, Bags & Label Rolls',
+        desc:"The unboxing experience is your brand's first handshake. We design and produce packaging that makes that moment count.",
+        img:'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&q=80&auto=format&fit=crop',
+        basePrice:35,
+        optGroups:[
+          { label:'Type',     opts:['Rigid Box','Mailer Box','Paper Bag','Poly Mailer'] },
+          { label:'Print',    opts:['Full CMYK Print','Foil Stamp','1-Colour Print','Unprinted'] },
+          { label:'Quantity', opts:['25 pcs','50 pcs','100 pcs','250 pcs','500 pcs'] },
+        ]
+      },
+      {
+        id:6, num:'07 — NOTEBOOKS', cat:'Notebooks & Stationery',
+        name:'Hardcover Notebooks & Pens',
+        desc:'Premium stationery that keeps your identity on the desk of someone who matters. Hardcover, softcover, dot grid, lined — every detail considered.',
+        img:'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80&auto=format&fit=crop',
+        basePrice:65,
+        optGroups:[
+          { label:'Cover',    opts:['Hardcover A5','Hardcover A4','Softcover A5','Spiral Bound'] },
+          { label:'Pages',    opts:['Lined','Dot Grid','Blank','Mixed'] },
+          { label:'Branding', opts:['Cover Print','Embossed Logo','Foil Stamp','Debossed'] },
+        ]
+      },
+    ];
+
+    /* ══════════════════════════════════════
+       STATE
+    ══════════════════════════════════════ */
+    let cart = [];
+    let pvProduct = null;
+    let pvQtyNum  = 1;
+    let pvSelections = {}; // groupLabel -> selected option
+
+    /* ── Toast ── */
+    let toastTimer;
+    function showToast(msg) {
+      const t = document.getElementById('ecToast');
+      document.getElementById('ecToastMsg').textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    /* ── Cart badge ── */
+    function updateCartBadge() {
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      const badge = document.getElementById('cartCount');
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'flex' : 'none';
+      document.getElementById('cartLabel').textContent = count > 0 ? `Cart (${count})` : 'Cart';
+    }
+
+    /* ══════════════════════════════════════
+       PRODUCT QUICK-VIEW MODAL
+    ══════════════════════════════════════ */
+    function openProduct(idx) {
+      const p = PRODUCTS[idx];
+      pvProduct = p;
+      pvQtyNum  = 1;
+      pvSelections = {};
+
+      // Populate modal
+      document.getElementById('pv-img').src              = p.img;
+      document.getElementById('pv-badge').textContent    = p.num;
+      document.getElementById('pv-cat').textContent      = p.cat;
+      document.getElementById('pv-title').textContent    = p.name;
+      document.getElementById('pv-desc').textContent     = p.desc;
+      document.getElementById('pvQtyVal').textContent    = '1';
+      document.getElementById('pv-variant-val').textContent = '';
+
+      // Build option groups
+      const chipsEl = document.getElementById('pv-variants');
+      chipsEl.innerHTML = '';
+      p.optGroups.forEach((grp, gi) => {
+        const groupDiv = document.createElement('div');
+        groupDiv.style.cssText = 'margin-bottom:14px';
+        const lbl = document.createElement('div');
+        lbl.className = 'ec-option-label';
+        lbl.textContent = grp.label;
+        groupDiv.appendChild(lbl);
+        const chipRow = document.createElement('div');
+        chipRow.className = 'ec-chips';
+        chipRow.style.marginTop = '6px';
+        grp.opts.forEach((opt, oi) => {
+          const btn = document.createElement('button');
+          btn.className = 'ec-chip' + (oi === 0 ? ' active' : '');
+          btn.textContent = opt;
+          if (oi === 0) pvSelections[grp.label] = opt;
+          btn.onclick = () => {
+            chipRow.querySelectorAll('.ec-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            pvSelections[grp.label] = opt;
+            updatePVSelLabel();
+          };
+          chipRow.appendChild(btn);
+        });
+        groupDiv.appendChild(chipRow);
+        chipsEl.appendChild(groupDiv);
+      });
+
+      // Auto-select first of each group
+      p.optGroups.forEach(g => { if (!pvSelections[g.label]) pvSelections[g.label] = g.opts[0]; });
+      updatePVSelLabel();
+      updatePVPrice();
+
+      document.getElementById('productOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updatePVSelLabel() {
+      const vals = Object.values(pvSelections).join(' · ');
+      document.getElementById('pv-variant-val').textContent = vals ? '· ' + vals : '';
+    }
+
+    function updatePVPrice() {
+      if (!pvProduct) return;
+      const total = pvProduct.basePrice * pvQtyNum;
+      document.getElementById('pv-total-price').textContent = `RM ${total}`;
+      document.getElementById('pv-unit-price').textContent  = `RM ${pvProduct.basePrice} / unit`;
+    }
+
+    function closeProduct() {
+      document.getElementById('productOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function pvQty(delta) {
+      pvQtyNum = Math.max(1, pvQtyNum + delta);
+      document.getElementById('pvQtyVal').textContent = pvQtyNum;
+      updatePVPrice();
+    }
+
+    function addToCartFromPV() {
+      if (!pvProduct) return;
+      const variant = Object.entries(pvSelections).map(([k,v]) => `${k}: ${v}`).join(', ');
+      const key = pvProduct.id + '-' + JSON.stringify(pvSelections);
+      const existing = cart.find(i => i.key === key);
+      if (existing) {
+        existing.qty += pvQtyNum;
+      } else {
+        cart.push({ key, productId: pvProduct.id, name: pvProduct.name, img: pvProduct.img, variant, price: pvProduct.basePrice, qty: pvQtyNum });
+      }
+      updateCartBadge();
+      renderCartItems();
+      showToast(`✓  ${pvProduct.name} added to cart`);
+      closeProduct();
+    }
+
+    /* ══════════════════════════════════════
+       CART DRAWER
+    ══════════════════════════════════════ */
+    function openCart() {
+      renderCartItems();
+      document.getElementById('cartOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCart() {
+      document.getElementById('cartOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function renderCartItems() {
+      const container  = document.getElementById('cartItems');
+      const foot       = document.getElementById('cartFoot');
+      const subtotalEl = document.getElementById('cartSubtotal');
+      const countEl    = document.getElementById('cartItemCount');
+
+      container.innerHTML = '';
+
+      if (cart.length === 0) {
+        const e = document.createElement('div');
+        e.className = 'cart-empty';
+        e.innerHTML = '<div style="font-size:2rem;margin-bottom:10px">🛒</div><p>Your cart is empty</p><span>Browse products above and add items</span>';
+        container.appendChild(e);
+        foot.style.display = 'none';
+        countEl.textContent = '0';
+        return;
+      }
+
+      let subtotal = 0;
+      cart.forEach((item) => {
+        subtotal += item.price * item.qty;
+        const row = document.createElement('div');
+        row.className = 'cart-item';
+        row.innerHTML = `
+          <div class="ci-img"><img src="${item.img}" alt="${item.name}" loading="lazy"/></div>
+          <div class="ci-details">
+            <div class="ci-name">${item.name}</div>
+            <div class="ci-meta" style="white-space:normal;font-size:.65rem;color:var(--muted);line-height:1.4;margin-bottom:6px">${item.variant}</div>
+            <div class="ci-qty-row">
+              <button class="ci-qty-btn" onclick="changeCartQty('${item.key}',-1)">−</button>
+              <span class="ci-qty-num">${item.qty}</span>
+              <button class="ci-qty-btn" onclick="changeCartQty('${item.key}',1)">+</button>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:8px">
+            <button class="ci-remove" onclick="removeCartItem('${item.key}')" title="Remove">✕</button>
+            <span class="ci-price">RM ${item.price * item.qty}</span>
+          </div>`;
+        container.appendChild(row);
+      });
+
+      subtotalEl.textContent = `RM ${subtotal}`;
+      countEl.textContent    = cart.reduce((s, i) => s + i.qty, 0);
+      foot.style.display     = 'block';
+    }
+
+    function changeCartQty(key, delta) {
+      const item = cart.find(i => i.key === key);
+      if (!item) return;
+      item.qty = Math.max(1, item.qty + delta);
+      updateCartBadge();
+      renderCartItems();
+    }
+
+    function removeCartItem(key) {
+      cart = cart.filter(i => i.key !== key);
+      updateCartBadge();
+      renderCartItems();
+    }
+
+    function cartTotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
+
+    /* ══════════════════════════════════════
+       CHECKOUT — 3-step flow
+    ══════════════════════════════════════ */
+    let ckStep = 1;
+    let selBank = null;
+
+    function goCheckout() {
+      if (cart.length === 0) { showToast('⚠  Your cart is empty'); return; }
+      closeCart();
+      ckStep = 1;
+      selBank = null;
+      showCkStep(1);
+      buildCkMini();
+      buildAmountBox();
+
+      // Reset step indicators
+      [1,2,3].forEach(n => {
+        const el = document.getElementById('step-ind-' + n);
+        el.classList.remove('active','done');
+        el.querySelector('span').textContent = n;
+        if (n === 1) el.classList.add('active');
+      });
+
+      // Reset bank selection
+      document.querySelectorAll('.ck-bank-opt').forEach(b => b.classList.remove('selected'));
+      const tb = document.getElementById('ckTransferBox');
+      if (tb) tb.style.display = 'none';
+      const ri = document.getElementById('ck-receipt');
+      if (ri) ri.value = '';
+
+      document.getElementById('checkoutOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkoutOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function showCkStep(n) {
+      [1,2,3].forEach(i => {
+        const p = document.getElementById('ck-step' + i);
+        if (p) p.style.display = (i === n) ? 'block' : 'none';
+      });
+      const modal = document.querySelector('#checkoutOverlay .ec-modal');
+      if (modal) modal.scrollTop = 0;
+    }
+
+    function buildCkMini() {
+      const el = document.getElementById('ckMini');
+      if (!el) return;
+      let html = '';
+      cart.forEach(item => {
+        html += `<div class="ck-mini-row"><span>${item.name} × ${item.qty}</span><span>RM ${item.price * item.qty}</span></div>`;
+      });
+      const total = cartTotal();
+      html += `<div class="ck-mini-row" style="border-top:1px solid var(--gold-md);margin-top:6px;padding-top:8px"><span style="color:var(--gold);font-weight:700">Total</span><span style="color:var(--gold);font-weight:800">RM ${total}</span></div>`;
+      el.innerHTML = html;
+    }
+
+    function buildAmountBox() {
+      const el = document.getElementById('ckAmountBox');
+      if (!el) return;
+      const total = cartTotal();
+      el.innerHTML = `
+        <div>
+          <div class="ck-amount-label">Total Amount to Transfer</div>
+          <div style="font-size:.7rem;color:var(--muted);margin-top:3px">Shipping calculated after order confirmation</div>
+        </div>
+        <div class="ck-amount-total">RM ${total}</div>`;
+      const td = document.getElementById('td-amount');
+      if (td) td.textContent = `RM ${total}`;
+    }
+
+    function goStep(n) {
+      // Validate step 1 → 2
+      if (n === 2 && ckStep === 1) {
+        const required = ['ck-name','ck-email','ck-phone','ck-addr1','ck-city','ck-post'];
+        let ok = true;
+        required.forEach(id => {
+          const el = document.getElementById(id);
+          if (!el || !el.value.trim()) {
+            if (el) { el.classList.add('err'); el.addEventListener('input', () => el.classList.remove('err'), { once:true }); }
+            ok = false;
+          }
+        });
+        if (!ok) { showToast('⚠  Please fill in all required fields'); return; }
+        const s1 = document.getElementById('step-ind-1');
+        s1.classList.remove('active'); s1.classList.add('done'); s1.querySelector('span').textContent = '✓';
+        document.getElementById('step-ind-2').classList.add('active');
+      }
+
+      // Validate step 2 → 3
+      if (n === 3 && ckStep === 2) {
+        if (!selBank) { showToast('⚠  Please select a payment bank'); return; }
+        const receipt = document.getElementById('ck-receipt');
+        if (!receipt || !receipt.value.trim()) {
+          if (receipt) { receipt.classList.add('err'); receipt.addEventListener('input', () => receipt.classList.remove('err'), { once:true }); }
+          showToast('⚠  Please enter your payment reference number');
+          return;
+        }
+        const s2 = document.getElementById('step-ind-2');
+        s2.classList.remove('active'); s2.classList.add('done'); s2.querySelector('span').textContent = '✓';
+        document.getElementById('step-ind-3').classList.add('active');
+        buildConfirmation();
+      }
+
+      ckStep = n;
+      showCkStep(n);
+    }
+
+    function selectBank(el, bankName, accNum, accHolder) {
+      document.querySelectorAll('.ck-bank-opt').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+      selBank = { name: bankName, acc: accNum, holder: accHolder };
+      document.getElementById('td-name').textContent = accHolder;
+      document.getElementById('td-bank').textContent = bankName;
+      document.getElementById('td-acc').textContent  = accNum;
+      const tb = document.getElementById('ckTransferBox');
+      if (tb) tb.style.display = 'block';
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text)
+        .then(() => showToast('✓  Copied to clipboard'))
+        .catch(() => showToast('Copy failed — please copy manually'));
+    }
+
+    function buildConfirmation() {
+      const name    = document.getElementById('ck-name').value;
+      const email   = document.getElementById('ck-email').value;
+      const receipt = document.getElementById('ck-receipt').value;
+      const total   = cartTotal();
+      const items   = cart.reduce((s, i) => s + i.qty, 0);
+
+      document.getElementById('ck-confirm-name').textContent  = name;
+      document.getElementById('ck-confirm-email').textContent = email;
+
+      const box = document.getElementById('ckConfirmBox');
+      if (box) box.innerHTML = `
+        <div class="ck-confirm-row"><span>Customer</span><span>${name}</span></div>
+        <div class="ck-confirm-row"><span>Items</span><span>${items} item(s)</span></div>
+        <div class="ck-confirm-row"><span>Payment via</span><span>${selBank ? selBank.name : '—'}</span></div>
+        <div class="ck-confirm-row"><span>Reference No.</span><span>${receipt}</span></div>
+        <div class="ck-confirm-row"><span>Amount</span><span style="color:var(--gold);font-weight:700">RM ${total}</span></div>
+        <div class="ck-confirm-row"><span>Next step</span><span>Proof within 1 business day</span></div>`;
+    }
+
+    function resetCart() {
+      cart = [];
+      updateCartBadge();
+      renderCartItems();
+    }
+
+    /* Escape key */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeProduct(); closeCart(); closeCheckout(); }
+    });
   </script>
 
 </body>
