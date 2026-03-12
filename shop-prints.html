@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Salaam by StudioTaha — Fine Art Prints, Posters & Framed Pieces. Gallery-quality prints for offices, studios, and spaces where brand culture is built. Giclée on archival paper, deep-bla..."/>
+  <title>Fine Art Prints, Posters & Framed Pieces — Salaam by StudioTaha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="shop.css"/>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="container">
+      <div class="ni">
+        <a href="salaam.html" class="sl-logo-brand">
+          <span class="parent">StudioTaha / Salaam /</span>
+          <span class="name">Premium Prints</span>
+        </a>
+        <ul class="nl">
+          <li><a href="salaam.html#about">About</a></li>
+          <li><a href="salaam.html#products">All Products</a></li>
+          <li><a href="salaam.html#process">How It Works</a></li>
+          <li><a href="index.html">StudioTaha</a></li>
+        </ul>
+        <a href="salaam.html#cta" class="btn btn-gold" style="padding:11px 22px;font-size:.82rem">Start an Order →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="shop-breadcrumb">
+    <div class="container">
+      <a href="index.html">StudioTaha</a>
+      <span class="sep">›</span>
+      <a href="salaam.html">Salaam</a>
+      <span class="sep">›</span>
+      <a href="salaam.html#products">Products</a>
+      <span class="sep">›</span>
+      <span class="current">Premium Prints</span>
+    </div>
+  </div>
+
+  <!-- MAIN SHOP PAGE -->
+  <main class="shop-page">
+    <div class="container">
+
+      <!-- ── TOP: Gallery + Config ── -->
+      <div class="shop-top">
+
+        <!-- Gallery -->
+        <div class="shop-gallery rv">
+          <div class="shop-gallery-main" id="mainImg">
+            <div class="gallery-badge">03 — PREMIUM PRINTS</div>
+            <img id="heroImg"
+              src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=1200&q=85&auto=format&fit=crop"
+              alt="Fine Art Prints, Posters & Framed Pieces"
+            />
+          </div>
+          <div class="shop-thumbs">
+            <div class="shop-thumb active" onclick="switchImg('https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=400&q=80&auto=format&fit=crop',this)"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=400&q=80&auto=format&fit=crop" alt="Art print" loading="lazy"/></div>
+<div class="shop-thumb" onclick="switchImg('https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=400&q=80&auto=format&fit=crop',this)"><img src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=400&q=80&auto=format&fit=crop" alt="Poster" loading="lazy"/></div>
+<div class="shop-thumb" onclick="switchImg('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=400&q=80&auto=format&fit=crop',this)"><img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=400&q=80&auto=format&fit=crop" alt="Framed" loading="lazy"/></div>
+<div class="shop-thumb" onclick="switchImg('https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=400&q=80&auto=format&fit=crop',this)"><img src="https://images.unsplash.com/photo-1572375992501-4b0892d50c69?w=400&q=80&auto=format&fit=crop" alt="Gallery wall" loading="lazy"/></div>
+
+          </div>
+        </div>
+
+        <!-- Config panel -->
+        <div class="shop-config rv d1">
+          <div class="shop-category-tag">Premium Prints</div>
+          <h1 class="shop-title">Fine Art Prints, Posters & Framed Pieces</h1>
+          <p class="shop-tagline">Gallery quality. Brand permanence.</p>
+
+          <div class="shop-rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-count">4.9 / 5 · 38 orders</span>
+          </div>
+
+          <div class="shop-price-row">
+            <span class="shop-price">from RM 120</span>
+            <span class="shop-price-note">per piece · custom quote for bulk</span>
+          </div>
+
+          <p class="shop-desc">Gallery-quality prints for offices, studios, and spaces where brand culture is built. Giclée on archival paper, deep-black inks, and meticulous colour profiling — because wall art should outlast trends and tell your story without saying a word.</p>
+
+          
+        <div class="shop-option-group">
+          <div class="shop-option-label">Format <span class="selected-val" id="lbl-Format"></span></div>
+          <div class="shop-chips"><button class="shop-chip-btn" onclick="selectChip(this,'Format')">A3 Poster</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Format')">A2 Poster</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Format')">A1 Poster</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Format')">Square 50×50cm</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Format')">Custom Size</button>
+</div>
+        </div>
+        <div class="shop-option-group">
+          <div class="shop-option-label">Paper <span class="selected-val" id="lbl-Paper"></span></div>
+          <div class="shop-chips"><button class="shop-chip-btn" onclick="selectChip(this,'Paper')">Archival Matte</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Paper')">Lustre Photo</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Paper')">Canvas</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Paper')">Metallic</button>
+</div>
+        </div>
+        <div class="shop-option-group">
+          <div class="shop-option-label">Framing <span class="selected-val" id="lbl-Framing"></span></div>
+          <div class="shop-chips"><button class="shop-chip-btn" onclick="selectChip(this,'Framing')">No Frame</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Framing')">Black Frame</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Framing')">White Frame</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Framing')">Natural Oak Frame</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Framing')">Dark Walnut Frame</button>
+</div>
+        </div>
+        <div class="shop-option-group">
+          <div class="shop-option-label">Finish <span class="selected-val" id="lbl-Finish"></span></div>
+          <div class="shop-chips"><button class="shop-chip-btn" onclick="selectChip(this,'Finish')">Standard</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Finish')">UV Coating</button>
+<button class="shop-chip-btn" onclick="selectChip(this,'Finish')">Laminated</button>
+</div>
+        </div>
+
+          <div class="shop-qty-row">
+            <div class="shop-option-label" style="margin-bottom:0">Quantity</div>
+            <div class="shop-qty">
+              <button onclick="changeQty(-1)">−</button>
+              <input type="number" id="qtyInput" value="1" min="1" max="999" readonly/>
+              <button onclick="changeQty(1)">+</button>
+            </div>
+            <span class="shop-qty-note">Min. 1 piece</span>
+          </div>
+
+          <!-- Actions -->
+          <div class="shop-actions">
+            <button class="btn btn-gold shop-add-btn" onclick="addToCart()">Order Now →</button>
+            <button class="shop-wish-btn" title="Save for later" onclick="toggleWish(this)">♡</button>
+          </div>
+
+          <!-- Trust badges -->
+          <div class="shop-trust">
+            <div class="shop-trust-item"><span class="ti-icon">🚀</span><div><strong>Archival</strong>inks — 80yr fade warranty</div></div><div class="shop-trust-item"><span class="ti-icon">📦</span><div><strong>Colour-profiled</strong>to your brand palette</div></div><div class="shop-trust-item"><span class="ti-icon">✦</span><div><strong>Signed</strong>& numbered available</div></div>
+          </div>
+
+          <!-- Online Banking Payment Info -->
+          <div class="shop-payment-box">
+            <h4>Payment — Online Banking</h4>
+            <div class="shop-bank-list">
+              <div class="shop-bank">
+                <span class="bk-icon">🏦</span>
+                <span class="shop-bank-name">Maybank2U</span>
+                <span class="shop-bank-num">5621 4400 1234</span>
+              </div>
+              <div class="shop-bank">
+                <span class="bk-icon">🏦</span>
+                <span class="shop-bank-name">CIMB Clicks</span>
+                <span class="shop-bank-num">7012 9983 5610</span>
+              </div>
+              <div class="shop-bank">
+                <span class="bk-icon">🏦</span>
+                <span class="shop-bank-name">RHB Now</span>
+                <span class="shop-bank-num">2651 0047 8833</span>
+              </div>
+              <div class="shop-bank">
+                <span class="bk-icon">📱</span>
+                <span class="shop-bank-name">DuitNow QR</span>
+                <span class="shop-bank-num">salaamstudiotaha</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── TABS: Details / Specs / Shipping / Reviews ── -->
+      <div class="shop-tabs-section rv">
+        <div class="shop-tabs-nav">
+          <button class="shop-tab-btn active" onclick="switchTab(this,'tab-details')">Product Details</button>
+          <button class="shop-tab-btn" onclick="switchTab(this,'tab-specs')">Specifications</button>
+          <button class="shop-tab-btn" onclick="switchTab(this,'tab-shipping')">Shipping & Process</button>
+          <button class="shop-tab-btn" onclick="switchTab(this,'tab-reviews')">Reviews</button>
+        </div>
+
+        <div id="tab-details" class="shop-tab-panel active">
+          <p style="font-size:.92rem;line-height:1.85;color:rgba(255,255,255,.65);max-width:720px;margin-bottom:20px">Gallery-quality prints for offices, studios, and spaces where brand culture is built. Giclée on archival paper, deep-black inks, and meticulous colour profiling — because wall art should outlast trends and tell your story without saying a word.</p>
+          <p style="font-size:.9rem;line-height:1.8;color:rgba(255,255,255,.55);max-width:720px">
+            Every Salaam product begins with a design consultation — either using your existing brand assets
+            or developed fresh by the StudioTaha creative team. We don't start production until you've
+            approved a proof. Your brand deserves that care.
+          </p>
+        </div>
+
+        <div id="tab-specs" class="shop-tab-panel">
+          <table class="spec-table"><tr><td>Print Method</td><td>Giclée inkjet — 12-colour pigment</td></tr><tr><td>Paper Weight</td><td>200–350 GSM archival acid-free</td></tr><tr><td>Colour Profile</td><td>ICC profiled to sRGB / CMYK brand palette</td></tr><tr><td>Minimum Qty</td><td>1 piece (no MOQ)</td></tr><tr><td>Turnaround</td><td>5–7 business days (add 3 days for framing)</td></tr><tr><td>Longevity</td><td>80+ years under UV glass; 40+ years open display</td></tr></table>
+        </div>
+
+        <div id="tab-shipping" class="shop-tab-panel">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:720px">
+            <div>
+              <h4 style="font-size:.88rem;margin-bottom:12px;color:var(--gold)">Production</h4>
+              <p style="font-size:.82rem;color:var(--muted);line-height:1.7">All products are made to order. Production begins after artwork approval and payment confirmation. You'll receive a proof within 1 business day of placing your order.</p>
+            </div>
+            <div>
+              <h4 style="font-size:.88rem;margin-bottom:12px;color:var(--gold)">Delivery</h4>
+              <p style="font-size:.82rem;color:var(--muted);line-height:1.7">Peninsular Malaysia: 2–3 days via J&T / Poslaju. East Malaysia: 4–6 days. International shipping available on request. Tracking number provided upon dispatch.</p>
+            </div>
+            <div>
+              <h4 style="font-size:.88rem;margin-bottom:12px;color:var(--gold)">Payment</h4>
+              <p style="font-size:.82rem;color:var(--muted);line-height:1.7">Online banking via Maybank2U, CIMB Clicks, or RHB Now. DuitNow QR also accepted. Full payment required before production begins. Receipt issued on confirmation.</p>
+            </div>
+            <div>
+              <h4 style="font-size:.88rem;margin-bottom:12px;color:var(--gold)">Returns & Revisions</h4>
+              <p style="font-size:.82rem;color:var(--muted);line-height:1.7">Custom products are non-refundable once production begins. However, if we produce something that doesn't match the approved proof, we'll reprint at no cost. Your satisfaction is our guarantee.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-reviews" class="shop-tab-panel">
+          <div style="display:flex;flex-direction:column;gap:20px;max-width:640px">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                <div style="font-size:.88rem;font-weight:600">Amirah R.</div>
+                <div style="color:var(--gold);font-size:.82rem">★★★★★</div>
+              </div>
+              <p style="font-size:.82rem;color:var(--muted);line-height:1.65">Ordered 30 pieces for our team launch. The quality was beyond what I expected — soft, colour-accurate, and packed beautifully. Will reorder every quarter.</p>
+              <div style="font-size:.65rem;color:rgba(255,255,255,.18);margin-top:10px">Verified order · 3 weeks ago</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                <div style="font-size:.88rem;font-weight:600">Danial K.</div>
+                <div style="color:var(--gold);font-size:.82rem">★★★★★</div>
+              </div>
+              <p style="font-size:.82rem;color:var(--muted);line-height:1.65">The DuitNow payment was fast and they confirmed within the hour. Proof came the next morning. Production was exactly on schedule. Really professional.</p>
+              <div style="font-size:.65rem;color:rgba(255,255,255,.18);margin-top:10px">Verified order · 1 month ago</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                <div style="font-size:.88rem;font-weight:600">Syira N.</div>
+                <div style="color:var(--gold);font-size:.82rem">★★★★☆</div>
+              </div>
+              <p style="font-size:.82rem;color:var(--muted);line-height:1.65">Took a day longer than expected but the end result was worth it. Would have given 5 stars if delivery was faster. Product itself is excellent — colours popped exactly as on the proof.</p>
+              <div style="font-size:.65rem;color:rgba(255,255,255,.18);margin-top:10px">Verified order · 6 weeks ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RELATED PRODUCTS ── -->
+      <div class="shop-related rv">
+        <h2>You might also <span style="color:var(--gold)">like</span></h2>
+        <div class="shop-related-grid">
+          
+        <a class="sr-card" href="shop-apparel.html">
+          <div class="sr-img"><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&q=75&auto=format&fit=crop" alt="T-Shirts & Apparel" loading="lazy"/></div>
+          <div class="sr-body">
+            <h4>T-Shirts & Apparel</h4>
+            <div><span class="sr-from">from</span><span class="sr-price">RM 89</span></div>
+          </div>
+        </a>
+        <a class="sr-card" href="shop-packaging.html">
+          <div class="sr-img"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=400&q=75&auto=format&fit=crop" alt="Custom Packaging" loading="lazy"/></div>
+          <div class="sr-body">
+            <h4>Custom Packaging</h4>
+            <div><span class="sr-from">from</span><span class="sr-price">RM 35</span></div>
+          </div>
+        </a>
+        <a class="sr-card" href="shop-giftsets.html">
+          <div class="sr-img"><img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400&q=75&auto=format&fit=crop" alt="Branded Gift Sets" loading="lazy"/></div>
+          <div class="sr-body">
+            <h4>Branded Gift Sets</h4>
+            <div><span class="sr-from">from</span><span class="sr-price">RM 280</span></div>
+          </div>
+        </a>
+        <a class="sr-card" href="shop-notebooks.html">
+          <div class="sr-img"><img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&q=75&auto=format&fit=crop" alt="Notebooks" loading="lazy"/></div>
+          <div class="sr-body">
+            <h4>Notebooks</h4>
+            <div><span class="sr-from">from</span><span class="sr-price">RM 65</span></div>
+          </div>
+        </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── ORDER MODAL ── -->
+  <div class="order-overlay" id="orderOverlay">
+    <div class="order-backdrop" onclick="closeOrder()"></div>
+    <div class="order-modal" id="orderModal">
+      <div class="om-header">
+        <div>
+          <h3>Place Your <span>Order</span></h3>
+          <p>Fill in your details and we'll confirm within 1 business day with a proof and payment total.</p>
+        </div>
+        <button class="om-close" onclick="closeOrder()">✕</button>
+      </div>
+
+      <div class="om-summary">
+        <div class="om-summary-thumb">
+          <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=1200&q=85&auto=format&fit=crop" alt="Fine Art Prints, Posters & Framed Pieces"/>
+        </div>
+        <div>
+          <div class="om-summary-name">Fine Art Prints, Posters & Framed Pieces</div>
+          <div class="om-summary-meta" id="om-meta">Quantity: 1 · Options: —</div>
+        </div>
+        <div class="om-summary-price">from RM 120</div>
+      </div>
+
+      <div id="omFormWrap">
+        <div class="om-form">
+          <div class="om-row">
+            <div class="om-field">
+              <label>Full Name</label>
+              <input type="text" id="om-name" placeholder="e.g. Amirah Razali"/>
+            </div>
+            <div class="om-field">
+              <label>Email</label>
+              <input type="email" id="om-email" placeholder="your@email.com"/>
+            </div>
+          </div>
+          <div class="om-row">
+            <div class="om-field">
+              <label>Phone / WhatsApp</label>
+              <input type="tel" id="om-phone" placeholder="+60 12-345 6789"/>
+            </div>
+            <div class="om-field">
+              <label>Company / Brand (optional)</label>
+              <input type="text" id="om-company" placeholder="Your brand name"/>
+            </div>
+          </div>
+          <div class="om-field">
+            <label>Delivery Address</label>
+            <input type="text" id="om-address" placeholder="Street, City, Postcode, State"/>
+          </div>
+          <div class="om-field">
+            <label>Notes / Special Requests</label>
+            <textarea id="om-notes" placeholder="Any colour, size, or artwork notes…"></textarea>
+          </div>
+          <div class="om-field">
+            <label>Do you have existing artwork?</label>
+            <select id="om-artwork">
+              <option value="">— Please select —</option>
+              <option>Yes — I'll send files after ordering</option>
+              <option>Partial — I have a logo, need help with layout</option>
+              <option>No — Please create artwork for me (+fee applies)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="om-payment-step">
+          <div class="om-step-label">Payment Instructions</div>
+          <div class="om-bank-detail">
+            <div class="om-bank-row">
+              <span class="lbl">Account Name</span>
+              <span class="val">SALAAM by StudioTaha Sdn Bhd</span>
+            </div>
+            <div class="om-bank-row">
+              <span class="lbl">Bank</span>
+              <span class="val">Maybank</span>
+            </div>
+            <div class="om-bank-row">
+              <span class="lbl">Account No.</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span class="val" id="acctNum">5621 4400 1234</span>
+                <button class="copy-btn" onclick="copyAcct()">Copy</button>
+              </div>
+            </div>
+            <div class="om-bank-row">
+              <span class="lbl">DuitNow ID</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span class="val">salaamstudiotaha</span>
+                <button class="copy-btn" onclick="copyDuitNow()">Copy</button>
+              </div>
+            </div>
+            <div class="om-divider"></div>
+            <div class="om-bank-row" style="padding-top:10px">
+              <span class="lbl" style="color:var(--muted);font-size:.75rem">Estimated Total</span>
+              <span class="val gold" id="om-total">RM 120 + shipping</span>
+            </div>
+          </div>
+          <p style="font-size:.72rem;color:var(--muted);margin-top:10px;line-height:1.55">
+            💡 Transfer after placing your order. Send your payment screenshot to
+            <strong style="color:var(--gold2)">salaam@studiotaha.com</strong> or WhatsApp us.
+            Production begins once payment is confirmed.
+          </p>
+        </div>
+
+        <div class="om-submit-row">
+          <button class="btn btn-gold" id="omSubmitBtn" onclick="submitOrder()">Confirm Order →</button>
+          <span class="om-note">Secure · No card required</span>
+        </div>
+      </div>
+
+      <div class="om-success" id="omSuccess">
+        <div class="om-success-icon">✦</div>
+        <h3>Order Received!</h3>
+        <p>Thank you. We'll send a proof and payment confirmation to your email within 1 business day. Check your inbox (and spam folder, just in case).</p>
+        <button class="btn btn-gold-g" onclick="closeOrder()" style="padding:12px 28px;font-size:.86rem;margin-top:8px">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CART TOAST ── -->
+  <div class="cart-toast" id="cartToast">
+    <div class="ct-icon">✓</div>
+    <div class="ct-text">
+      <strong>Added to your order!</strong>
+      <span>We'll confirm details via email.</span>
+    </div>
+    <button class="ct-close" onclick="dismissToast()">✕</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="fi">
+        <div class="sl-logo-brand" style="font-size:1.1rem">
+          <span class="parent">StudioTaha /</span>
+          <span class="name">Salaam</span>
+        </div>
+        <ul class="fl">
+          <li><a href="salaam.html#about">About</a></li>
+          <li><a href="salaam.html#products">Products</a></li>
+          <li><a href="salaam.html#process">How It Works</a></li>
+          <li><a href="index.html" style="color:rgba(0,209,255,.6)">← StudioTaha</a></li>
+        </ul>
+        <p style="font-size:.74rem;color:rgba(255,255,255,.18)">© 2025 Salaam by StudioTaha · Photos via <a href="https://unsplash.com" target="_blank" style="color:rgba(201,168,76,.35)">Unsplash</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Sticky nav ── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, {passive:true});
+
+    /* ── Scroll reveal ── */
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('vi');ro.unobserve(e.target);} });
+    }, {threshold:0.1});
+    document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+
+    /* ── Gallery switcher ── */
+    function switchImg(url, thumb) {
+      document.getElementById('heroImg').src = url;
+      document.querySelectorAll('.shop-thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    }
+
+    /* ── Option selectors ── */
+    function selectChip(el, group) {
+      el.closest('.shop-chips').querySelectorAll('.shop-chip-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('lbl-' + group.replace(/ /g,'-')).textContent = '· ' + el.textContent;
+    }
+    function selectSwatch(el, group) {
+      el.closest('.shop-swatches').querySelectorAll('.shop-swatch').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('lbl-' + group.replace(/ /g,'-')).textContent = '· ' + el.title;
+    }
+
+    /* ── Quantity ── */
+    function changeQty(delta) {
+      const inp = document.getElementById('qtyInput');
+      inp.value = Math.max(1, parseInt(inp.value) + delta);
+    }
+
+    /* ── Wishlist toggle ── */
+    function toggleWish(btn) {
+      btn.textContent = btn.textContent === '♡' ? '♥' : '♡';
+      btn.style.color = btn.textContent === '♥' ? 'var(--gold)' : '';
+    }
+
+    /* ── Tabs ── */
+    function switchTab(btn, panelId) {
+      document.querySelectorAll('.shop-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.shop-tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(panelId).classList.add('active');
+    }
+
+    /* ── Cart / Order modal ── */
+    function addToCart() {
+      const qty  = document.getElementById('qtyInput').value;
+      const meta = document.getElementById('om-meta');
+      if(meta) meta.textContent = 'Qty: ' + qty + ' · Confirm options in form below';
+      showToast();
+      setTimeout(() => openOrder(), 800);
+    }
+
+    function showToast() {
+      const t = document.getElementById('cartToast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3200);
+    }
+    function dismissToast() {
+      document.getElementById('cartToast').classList.remove('show');
+    }
+
+    function openOrder() {
+      document.getElementById('orderOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('omSuccess').classList.remove('show');
+      document.getElementById('omFormWrap').style.display = '';
+    }
+    function closeOrder() {
+      document.getElementById('orderOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeOrder(); });
+
+    /* ── Copy helpers ── */
+    function copyAcct() {
+      navigator.clipboard.writeText('5621440012340').then(() => {
+        const btn = event.target; btn.textContent='Copied!';
+        setTimeout(()=>btn.textContent='Copy',2000);
+      });
+    }
+    function copyDuitNow() {
+      navigator.clipboard.writeText('salaamstudiotaha').then(() => {
+        const btn = event.target; btn.textContent='Copied!';
+        setTimeout(()=>btn.textContent='Copy',2000);
+      });
+    }
+
+    /* ── Submit order ── */
+    function submitOrder() {
+      const required = ['om-name','om-email','om-phone','om-address'];
+      let valid = true;
+      required.forEach(id => {
+        const el = document.getElementById(id);
+        if(!el.value.trim()) {
+          el.classList.add('error');
+          valid = false;
+          el.addEventListener('input', ()=>el.classList.remove('error'), {once:true});
+        }
+      });
+      if(!valid) return;
+
+      const btn = document.getElementById('omSubmitBtn');
+      btn.textContent = 'Sending…'; btn.disabled = true;
+
+      /* Replace setTimeout with real fetch/EmailJS/Formspree */
+      setTimeout(() => {
+        document.getElementById('omFormWrap').style.display = 'none';
+        const s = document.getElementById('omSuccess');
+        s.classList.add('show');
+        s.style.display = 'flex';
+      }, 1400);
+    }
+  </script>
+
+</body>
+</html>
