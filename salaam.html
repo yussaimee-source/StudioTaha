@@ -1211,12 +1211,22 @@
     }, { passive: true });
 
     /* Scroll reveal */
-    const ro = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('vi'); ro.unobserve(e.target); }
+    function revealEl(el) { el.classList.add('vi'); }
+    function initReveal() {
+      const els = document.querySelectorAll('.rv');
+      if (!('IntersectionObserver' in window)) { els.forEach(revealEl); return; }
+      const ro = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => { if (e.isIntersecting) { revealEl(e.target); obs.unobserve(e.target); } });
+      }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) { revealEl(el); }
+        else { ro.observe(el); }
       });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReveal);
+    } else { initReveal(); }
   </script>
 
 </body>

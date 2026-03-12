@@ -1270,8 +1270,10 @@ footer {
   opacity: 0;
   transform: translateY(36px);
   transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  animation: rv-fallback 0s 2.5s forwards;
 }
-.rv.vi { opacity: 1; transform: translateY(0); }
+.rv.vi { opacity: 1; transform: translateY(0); animation: none; }
+@keyframes rv-fallback { to { opacity: 1; transform: translateY(0); } }
 .d1 { transition-delay: 0.1s; }
 .d2 { transition-delay: 0.2s; }
 .d3 { transition-delay: 0.3s; }

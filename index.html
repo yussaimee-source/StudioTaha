@@ -656,7 +656,7 @@
           <li><a href="#">Careers</a></li>
           <li><a href="#">Privacy</a></li>
         </ul>
-        <p style="font-size:.74rem;color:rgba(255,255,255,.18)">© 2025 StudioTaha · Photos via <a href="https://unsplash.com" target="_blank" style="color:rgba(0,209,255,.35)">Unsplash</a></p>
+        <p style="font-size:.74rem;color:rgba(255,255,255,.18)">© 2025 StudioTaha · Photos via <a href="https://unsplash.com" target="_blank" style="color:rgba(255,255,255,.25)">Unsplash</a></p>
       </div>
     </div>
   </footer>
@@ -672,19 +672,36 @@
     }, { passive: true });
 
     /* ── Scroll reveal ── */
-    const ro = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('vi');
-          ro.unobserve(e.target);
-        }
+    function revealEl(el) {
+      el.classList.add('vi');
+    }
+    function initReveal() {
+      const els = document.querySelectorAll('.rv');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(revealEl); return;
+      }
+      const ro = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { revealEl(e.target); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) { revealEl(el); }
+        else { ro.observe(el); }
       });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReveal);
+    } else {
+      initReveal();
+    }
 
     /* ── Animated counters ── */
     function counter(el, target, isDecimal, duration = 1800) {
       let startTime = null;
+      const val0 = isDecimal ? '0.0' : '0';
+      el.textContent = val0;
       const step = (timestamp) => {
         if (!startTime) startTime = timestamp;
         const progress = Math.min((timestamp - startTime) / duration, 1);
@@ -692,20 +709,29 @@
         const value    = eased * target;
         el.textContent = isDecimal ? value.toFixed(1) : Math.floor(value).toLocaleString();
         if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = isDecimal ? target.toFixed(1) : target.toLocaleString();
       };
       requestAnimationFrame(step);
     }
-
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const el = e.target;
-          counter(el, +el.dataset.t, !!el.dataset.d);
-          counterObserver.unobserve(el);
-        }
+    const cntEls = document.querySelectorAll('.cnt');
+    if ('IntersectionObserver' in window) {
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const el = e.target;
+            counter(el, +el.dataset.t, !!el.dataset.d);
+            counterObserver.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1 });
+      cntEls.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight) { counter(el, +el.dataset.t, !!el.dataset.d); }
+        else { counterObserver.observe(el); }
       });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('.cnt').forEach(el => counterObserver.observe(el));
+    } else {
+      cntEls.forEach(el => counter(el, +el.dataset.t, !!el.dataset.d));
+    }
 
     /* ── Inline Contact Section submit ── */
     function submitContactInline() {

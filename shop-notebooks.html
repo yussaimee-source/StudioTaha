@@ -384,7 +384,7 @@
           </div>
           <p style="font-size:.72rem;color:var(--muted);margin-top:10px;line-height:1.55">
             💡 Transfer after placing your order. Send your payment screenshot to
-            <strong style="color:var(--gold2)">salaam@studiotaha.com</strong> or WhatsApp us.
+            <strong style="color:var(--gold2)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d2a1b3beb3b3bf92a1a6a7b6bbbda6b3bab3fcb1bdbf">[email&#160;protected]</a></strong> or WhatsApp us.
             Production begins once payment is confirmed.
           </p>
         </div>
@@ -433,7 +433,7 @@
     </div>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     /* ── Sticky nav ── */
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
@@ -441,10 +441,22 @@
     }, {passive:true});
 
     /* ── Scroll reveal ── */
-    const ro = new IntersectionObserver(entries => {
-      entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('vi');ro.unobserve(e.target);} });
-    }, {threshold:0.1});
-    document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+    function revealEl(el) { el.classList.add('vi'); }
+    function initReveal() {
+      const els = document.querySelectorAll('.rv');
+      if (!('IntersectionObserver' in window)) { els.forEach(revealEl); return; }
+      const ro = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => { if (e.isIntersecting) { revealEl(e.target); obs.unobserve(e.target); } });
+      }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) { revealEl(el); }
+        else { ro.observe(el); }
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReveal);
+    } else { initReveal(); }
 
     /* ── Gallery switcher ── */
     function switchImg(url, thumb) {
@@ -548,13 +560,4 @@
 
       /* Replace setTimeout with real fetch/EmailJS/Formspree */
       setTimeout(() => {
-        document.getElementById('omFormWrap').style.display = 'none';
-        const s = document.getElementById('omSuccess');
-        s.classList.add('show');
-        s.style.display = 'flex';
-      }, 1400);
-    }
-  </script>
-
-</body>
-</html>
+        doc
