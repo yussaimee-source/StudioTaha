@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Salaam by StudioTaha — Premium branded merchandise. T-shirts, mugs, stickers, and fine art prints crafted with intention." />
+  <title>Salaam — by StudioTaha</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+
+  /* ══════════════════════════════════════
+     SALAAM PAGE — design tokens
+  ══════════════════════════════════════ */
+  :root {
+    --gold:    #C9A84C;
+    --gold2:   #E8C97A;
+    --gold-lo: rgba(201,168,76,0.08);
+    --gold-md: rgba(201,168,76,0.14);
+    --gold-hi: rgba(201,168,76,0.28);
+  }
+
+  /* shared utilities */
+  .sl-gold        { color: var(--gold); }
+  .sl-gold2       { color: var(--gold2); }
+  .sl-serif       { font-family:'Noto Serif',serif; }
+  .sl-tag {
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:.68rem; font-weight:600; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:18px;
+  }
+  .sl-tag::before { content:''; width:22px; height:1px; background:linear-gradient(90deg,var(--gold),transparent); }
+
+  /* gold buttons */
+  .btn-gold  { background:var(--gold); color:#000; font-weight:600; box-shadow:0 0 28px rgba(201,168,76,.2); }
+  .btn-gold:hover  { transform:translateY(-2px); box-shadow:0 0 48px rgba(201,168,76,.4); }
+  .btn-gold-g { background:transparent; color:var(--gold); border:1px solid var(--gold-hi); }
+  .btn-gold-g:hover { border-color:var(--gold); transform:translateY(-2px); }
+
+  /* ══════════════════════════════════════
+     NAV overrides for Salaam page
+  ══════════════════════════════════════ */
+  .sl-logo-brand { font-family:var(--fh); font-weight:800; font-size:1.18rem; letter-spacing:-.02em; }
+  .sl-logo-brand .parent  { color:var(--muted); font-size:.75em; font-weight:400; margin-right:4px; }
+  .sl-logo-brand .name    { color:var(--gold); }
+
+  /* ══════════════════════════════════════
+     HERO — full-height split
+  ══════════════════════════════════════ */
+  .sl-hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 88px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ambient blobs */
+  .sl-hero::before {
+    content:'';
+    position:absolute; top:-200px; left:-150px;
+    width:700px; height:700px; border-radius:50%;
+    background:radial-gradient(circle,rgba(201,168,76,.055) 0%,transparent 70%);
+    pointer-events:none; z-index:0;
+  }
+  .sl-hero::after {
+    content:'';
+    position:absolute; bottom:-100px; right:30%;
+    width:500px; height:500px; border-radius:50%;
+    background:radial-gradient(circle,rgba(201,168,76,.03) 0%,transparent 70%);
+    pointer-events:none; z-index:0;
+  }
+
+  /* left copy panel */
+  .sl-hero-left {
+    position:relative; z-index:2;
+    display:flex; flex-direction:column; justify-content:center;
+    padding: 80px max(36px, calc((100vw - 1200px)/2 + 36px)) 80px max(36px, calc((100vw - 1200px)/2 + 36px));
+    padding-right: 72px;
+  }
+
+  .sl-hero-overtag {
+    display:inline-flex; align-items:center; gap:12px;
+    font-size:.68rem; font-weight:600; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--gold);
+    margin-bottom:32px;
+    opacity:0; animation:fu .8s var(--ease) .1s forwards;
+  }
+  .sl-hero-overtag::before { content:''; width:28px; height:1px; background:var(--gold); }
+  .sl-hero-overtag .dot-sep { width:4px; height:4px; border-radius:50%; background:var(--gold-hi); }
+  .sl-hero-overtag .ar { font-family:'Noto Serif',serif; font-size:1rem; opacity:.5; letter-spacing:0; }
+
+  .sl-hero-h1 {
+    font-size: clamp(3.2rem, 6.5vw, 7rem);
+    font-weight:800; letter-spacing:-.05em; line-height:1.0;
+    margin-bottom:8px;
+    opacity:0; animation:fu .8s var(--ease) .2s forwards;
+  }
+  .sl-hero-h1 .line2 { color:var(--gold); display:block; }
+
+  .sl-hero-arabic {
+    font-family:'Noto Serif',serif;
+    font-size:clamp(1rem,1.8vw,1.4rem);
+    color:var(--gold2); opacity:.7;
+    direction:rtl; text-align:left;
+    margin-bottom:28px;
+    opacity:0; animation:fu .8s var(--ease) .3s forwards;
+  }
+
+  .sl-hero-body {
+    font-size:.97rem; line-height:1.85;
+    color:rgba(255,255,255,.62); max-width:480px;
+    margin-bottom:44px;
+    opacity:0; animation:fu .8s var(--ease) .42s forwards;
+  }
+  .sl-hero-body strong { color:var(--text); font-weight:500; }
+
+  .sl-hero-ctas {
+    display:flex; gap:14px; flex-wrap:wrap;
+    opacity:0; animation:fu .8s var(--ease) .55s forwards;
+  }
+
+  /* stat strip at bottom of hero left */
+  .sl-hero-stats {
+    display:flex; gap:0;
+    border:1px solid var(--gold-md); border-radius:var(--r);
+    overflow:hidden; margin-top:52px;
+    opacity:0; animation:fu .7s var(--ease) .7s forwards;
+  }
+  .sl-hstat {
+    flex:1; padding:16px 20px;
+    background:var(--gold-lo); border-right:1px solid var(--gold-md);
+    transition:background .3s;
+  }
+  .sl-hstat:last-child { border-right:none; }
+  .sl-hstat:hover { background:var(--gold-md); }
+  .sl-hstat-n { font-family:var(--fh); font-size:1.3rem; font-weight:800; color:var(--gold); letter-spacing:-.03em; }
+  .sl-hstat-l { font-size:.64rem; color:var(--muted); letter-spacing:.06em; margin-top:3px; }
+
+  /* right: image mosaic grid */
+  .sl-hero-right {
+    position:relative; z-index:1;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap:3px;
+    overflow:hidden;
+  }
+  .sl-hero-right::before {
+    content:'';
+    position:absolute; inset:0; z-index:2;
+    background:linear-gradient(90deg, var(--bg) 0%, transparent 18%);
+    pointer-events:none;
+  }
+
+  .sl-mosaic-cell {
+    position:relative; overflow:hidden;
+    background:var(--surface);
+  }
+  .sl-mosaic-cell.span-col { grid-column:1/-1; }
+  .sl-mosaic-cell img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(.5) saturate(.6) sepia(.12);
+    transition:transform 8s ease, filter .6s;
+  }
+  .sl-mosaic-cell:hover img { transform:scale(1.05); filter:brightness(.65) saturate(.8); }
+  /* product label badge on each cell */
+  .sl-mosaic-lbl {
+    position:absolute; bottom:12px; left:12px; z-index:3;
+    font-size:.62rem; font-weight:700; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--gold);
+    background:rgba(0,0,0,.72); backdrop-filter:blur(8px);
+    border:1px solid var(--gold-md); border-radius:100px;
+    padding:4px 10px;
+  }
+
+  /* ══════════════════════════════════════
+     BRAND STORY STRIP — full-width
+  ══════════════════════════════════════ */
+  .sl-brand-strip {
+    background:var(--surface);
+    border-top:1px solid var(--gold-md);
+    border-bottom:1px solid var(--gold-md);
+    padding:80px 0;
+  }
+  .sl-brand-strip-inner {
+    display:grid;
+    grid-template-columns:1fr 2px 1fr 2px 1fr;
+    gap:0; align-items:start;
+  }
+  .sl-strip-col { padding:0 52px; }
+  .sl-strip-col:first-child { padding-left:0; }
+  .sl-strip-col:last-child  { padding-right:0; }
+  .sl-strip-div {
+    width:1px; background:var(--gold-md); align-self:stretch; margin:0 auto;
+  }
+  .sl-strip-col h3 {
+    font-size:1.1rem; font-weight:800; margin-bottom:12px; letter-spacing:-.02em;
+  }
+  .sl-strip-col p {
+    font-size:.86rem; color:var(--muted); line-height:1.75;
+  }
+  .sl-strip-num {
+    font-family:var(--fh); font-size:2.4rem; font-weight:800;
+    color:var(--gold); letter-spacing:-.06em; line-height:1;
+    margin-bottom:8px;
+  }
+
+  /* ══════════════════════════════════════
+     ABOUT SECTION — editorial 2-col
+  ══════════════════════════════════════ */
+  .sl-about { padding:120px 0; }
+  .sl-about-grid {
+    display:grid;
+    grid-template-columns:5fr 7fr;
+    gap:80px; align-items:center;
+  }
+
+  /* image composition */
+  .sl-about-imgs { position:relative; height:580px; }
+
+  .sl-img-a {
+    position:absolute; top:0; left:0; right:64px; bottom:100px;
+    border-radius:16px; overflow:hidden;
+    border:1px solid var(--gold-md);
+  }
+  .sl-img-a img { width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(.58) saturate(.65) sepia(.1);
+    transition:transform .6s var(--ease); }
+  .sl-img-a:hover img { transform:scale(1.04); }
+
+  .sl-img-b {
+    position:absolute; bottom:0; right:0;
+    width:230px; height:250px;
+    border-radius:16px; overflow:hidden;
+    border:2px solid var(--gold-hi);
+    box-shadow:0 0 40px rgba(201,168,76,.08);
+  }
+  .sl-img-b img { width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(.7) saturate(.7); }
+
+  /* floating pill */
+  .sl-img-pill {
+    position:absolute; top:20px; left:20px; z-index:2;
+    display:flex; align-items:center; gap:8px;
+    background:rgba(0,0,0,.78); backdrop-filter:blur(12px);
+    border:1px solid var(--gold-md); border-radius:100px;
+    padding:7px 15px; font-size:.67rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .sl-pill-dot {
+    width:6px; height:6px; border-radius:50%;
+    background:var(--gold);
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+
+  /* copy */
+  .sl-about-copy {}
+  .sl-about-copy h2 {
+    font-size:clamp(2.2rem,4vw,3.8rem);
+    line-height:1.08; margin-bottom:24px;
+  }
+  .sl-about-copy p {
+    font-size:.95rem; line-height:1.85;
+    color:rgba(255,255,255,.64); margin-bottom:18px;
+  }
+  .sl-about-copy p strong { color:var(--text); font-weight:500; }
+  .sl-about-copy em { color:var(--gold2); font-style:normal; }
+
+  /* Arabic pull-quote */
+  .sl-pull-quote {
+    border-left:2px solid var(--gold);
+    padding:16px 20px; margin:28px 0;
+    background:var(--gold-lo); border-radius:0 10px 10px 0;
+  }
+  .sl-pq-ar {
+    font-family:'Noto Serif',serif;
+    font-size:1.05rem; color:var(--gold);
+    direction:rtl; text-align:right;
+    margin-bottom:8px; line-height:1.6;
+  }
+  .sl-pq-en { font-size:.8rem; color:var(--muted); font-style:italic; line-height:1.55; }
+
+  /* ══════════════════════════════════════
+     PRODUCTS — feature + grid
+  ══════════════════════════════════════ */
+  .sl-products { padding:0 0 120px; }
+
+  .sl-prod-hdr {
+    display:flex; align-items:flex-end; justify-content:space-between;
+    gap:32px; flex-wrap:wrap; margin-bottom:56px;
+  }
+  .sl-prod-hdr h2 { font-size:clamp(2.2rem,4.5vw,3.8rem); line-height:1.05; }
+  .sl-prod-hdr p  { max-width:320px; color:var(--muted); font-size:.9rem; line-height:1.7; }
+
+  /* === FEATURED ROW: 1 large + 2 stacked === */
+  .sl-feat-row {
+    display:grid;
+    grid-template-columns:1.6fr 1fr;
+    gap:18px; margin-bottom:18px;
+  }
+
+  /* large featured card */
+  .sl-feat-main {
+    border-radius:16px; overflow:hidden;
+    border:1px solid var(--gold-md);
+    display:grid; grid-template-rows:1fr auto;
+    min-height:480px;
+    position:relative;
+    transition:border-color .3s;
+  }
+  .sl-feat-main:hover { border-color:var(--gold-hi); }
+  .sl-feat-main-img {
+    position:relative; overflow:hidden;
+  }
+  .sl-feat-main-img img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(.52) saturate(.6);
+    transition:transform .6s var(--ease), filter .4s;
+  }
+  .sl-feat-main:hover .sl-feat-main-img img {
+    transform:scale(1.04); filter:brightness(.68) saturate(.82);
+  }
+  .sl-feat-main-img::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 50%);
+  }
+  .sl-feat-overlay {
+    position:absolute; bottom:0; left:0; right:0; z-index:2;
+    padding:32px 36px;
+  }
+  .sl-feat-num {
+    font-family:var(--fh); font-size:.65rem; font-weight:700;
+    letter-spacing:.14em; color:var(--gold);
+    background:rgba(0,0,0,.65); backdrop-filter:blur(10px);
+    border:1px solid var(--gold-md); border-radius:100px;
+    padding:3px 12px; display:inline-block; margin-bottom:16px;
+  }
+  .sl-feat-overlay h3 {
+    font-size:clamp(1.5rem,2.5vw,2rem); margin-bottom:8px;
+    line-height:1.1;
+  }
+  .sl-feat-overlay p { font-size:.84rem; color:rgba(255,255,255,.6); line-height:1.65; max-width:400px; }
+  .sl-feat-chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
+  .sl-chip {
+    font-size:.62rem; padding:3px 10px;
+    border:1px solid var(--gold-md); border-radius:100px;
+    color:var(--muted); letter-spacing:.04em;
+    transition:all .25s;
+  }
+  .sl-feat-main:hover .sl-chip, .sl-prod-card:hover .sl-chip {
+    border-color:var(--gold-hi); color:var(--gold);
+  }
+
+  /* right stacked: 2 equal cards */
+  .sl-feat-stack {
+    display:grid; grid-template-rows:1fr 1fr;
+    gap:18px;
+  }
+  .sl-feat-sm {
+    border-radius:16px; overflow:hidden;
+    border:1px solid var(--gold-md);
+    display:grid; grid-template-columns:160px 1fr;
+    position:relative; background:var(--card);
+    transition:all .4s var(--ease);
+  }
+  .sl-feat-sm:hover {
+    border-color:var(--gold-hi);
+    transform:translateX(4px);
+    box-shadow:0 16px 48px rgba(0,0,0,.5);
+  }
+  .sl-feat-sm-img {
+    position:relative; overflow:hidden;
+  }
+  .sl-feat-sm-img img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(.52) saturate(.6);
+    transition:filter .4s, transform .5s var(--ease);
+  }
+  .sl-feat-sm:hover .sl-feat-sm-img img {
+    filter:brightness(.7) saturate(.85); transform:scale(1.06);
+  }
+  .sl-feat-sm-img::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg, transparent 70%, var(--card));
+  }
+  .sl-feat-sm-body {
+    padding:24px 24px; display:flex;
+    flex-direction:column; justify-content:center; gap:8px;
+  }
+  .sl-feat-sm-body h3 { font-size:.95rem; transition:color .2s; }
+  .sl-feat-sm:hover .sl-feat-sm-body h3 { color:var(--gold); }
+  .sl-feat-sm-body .sl-prod-sub { font-size:.68rem; color:var(--gold); letter-spacing:.04em; }
+  .sl-feat-sm-body p { font-size:.78rem; color:var(--muted); line-height:1.6; }
+
+  /* === SECONDARY ROW: 4 equal cards === */
+  .sl-prod-row {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px; margin-top:0;
+  }
+  .sl-prod-card {
+    background:var(--card);
+    border:1px solid var(--gold-md); border-radius:14px;
+    overflow:hidden; display:flex; flex-direction:column;
+    transition:all .4s var(--ease);
+  }
+  .sl-prod-card:hover {
+    transform:translateY(-6px);
+    border-color:var(--gold-hi);
+    box-shadow:0 24px 56px rgba(0,0,0,.5),0 0 0 1px rgba(201,168,76,.07);
+  }
+  .sl-prod-img {
+    position:relative; height:180px; overflow:hidden;
+  }
+  .sl-prod-img img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(.5) saturate(.6);
+    transition:transform .55s var(--ease), filter .4s;
+  }
+  .sl-prod-card:hover .sl-prod-img img { transform:scale(1.07); filter:brightness(.7) saturate(.85); }
+  .sl-prod-img::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to bottom,transparent 50%, var(--card) 100%);
+  }
+  .sl-prod-badge {
+    position:absolute; top:10px; left:10px; z-index:2;
+    font-size:.58rem; font-weight:700; letter-spacing:.12em;
+    color:var(--gold); background:rgba(0,0,0,.65); backdrop-filter:blur(8px);
+    border:1px solid var(--gold-md); border-radius:100px; padding:3px 9px;
+  }
+  .sl-prod-body {
+    padding:18px 18px 22px; flex:1; display:flex; flex-direction:column;
+  }
+  .sl-prod-body h3 { font-size:.92rem; margin-bottom:3px; transition:color .2s; }
+  .sl-prod-card:hover .sl-prod-body h3 { color:var(--gold); }
+  .sl-prod-sub { font-size:.65rem; color:var(--gold); letter-spacing:.04em; margin-bottom:9px; }
+  .sl-prod-body p { font-size:.76rem; color:var(--muted); line-height:1.65; flex:1; margin-bottom:12px; }
+  .sl-prod-chips { display:flex; flex-wrap:wrap; gap:4px; }
+
+  /* ══════════════════════════════════════
+     PROCESS / HOW IT WORKS
+  ══════════════════════════════════════ */
+  .sl-process { padding:0 0 120px; }
+  .sl-process-hdr { margin-bottom:56px; }
+  .sl-process-hdr h2 { font-size:clamp(2rem,3.5vw,3.2rem); }
+
+  .sl-process-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px; background:var(--gold-md);
+    border:1px solid var(--gold-md); border-radius:var(--r); overflow:hidden;
+  }
+  .sl-step {
+    background:var(--card); padding:36px 28px;
+    display:flex; flex-direction:column; gap:14px;
+    transition:background .3s;
+  }
+  .sl-step:hover { background:#111; }
+  .sl-step-num {
+    font-family:var(--fh); font-size:2.6rem; font-weight:800;
+    letter-spacing:-.06em; color:var(--gold-md); line-height:1;
+    transition:color .3s;
+  }
+  .sl-step:hover .sl-step-num { color:rgba(201,168,76,.3); }
+  .sl-step h3 { font-size:1rem; font-weight:700; }
+  .sl-step p  { font-size:.82rem; color:var(--muted); line-height:1.65; }
+
+  /* ══════════════════════════════════════
+     VALUES SECTION
+  ══════════════════════════════════════ */
+  .sl-values { padding:0 0 120px; border-top:1px solid var(--gold-md); }
+  .sl-values-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:72px; align-items:center; padding-top:80px;
+  }
+
+  /* mosaic image left */
+  .sl-val-imgs {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:280px 280px;
+    gap:12px;
+  }
+  .sl-val-img-cell {
+    border-radius:14px; overflow:hidden;
+    border:1px solid var(--gold-md); position:relative;
+  }
+  .sl-val-img-cell.tall { grid-row:1/3; }
+  .sl-val-img-cell img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(.52) saturate(.6) sepia(.1);
+    transition:transform .6s var(--ease), filter .4s;
+  }
+  .sl-val-img-cell:hover img { transform:scale(1.05); filter:brightness(.7) saturate(.8); }
+  /* overlay gradient on tall cell */
+  .sl-val-img-cell.tall::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 45%);
+  }
+  .sl-ar-tile {
+    position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+    z-index:2; text-align:center;
+    background:rgba(0,0,0,.75); backdrop-filter:blur(14px);
+    border:1px solid var(--gold-hi); border-radius:12px;
+    padding:14px 22px; min-width:140px;
+  }
+  .sl-ar-word {
+    font-family:'Noto Serif',serif;
+    font-size:2rem; color:var(--gold); direction:rtl; line-height:1.2;
+  }
+  .sl-ar-tr { font-size:.6rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; margin-top:4px; }
+
+  /* values list */
+  .sl-val-list { display:flex; flex-direction:column; gap:20px; margin-top:32px; }
+  .sl-val-item {
+    display:grid; grid-template-columns:36px 1fr;
+    gap:14px; align-items:flex-start;
+    padding:16px 18px;
+    border:1px solid var(--gold-lo); border-radius:var(--r);
+    background:var(--gold-lo); transition:all .3s var(--ease);
+  }
+  .sl-val-item:hover { background:var(--gold-md); border-color:var(--gold-md); transform:translateX(4px); }
+  .sl-val-icon {
+    width:36px; height:36px; border-radius:8px;
+    background:var(--gold-lo); border:1px solid var(--gold-md);
+    color:var(--gold); font-size:.9rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sl-val-item h4 { font-size:.88rem; font-weight:700; color:var(--gold2); margin-bottom:4px; }
+  .sl-val-item p  { font-size:.78rem; color:var(--muted); line-height:1.6; }
+
+  /* ══════════════════════════════════════
+     QUOTE STRIP
+  ══════════════════════════════════════ */
+  .sl-qs {
+    padding:96px 0; text-align:center;
+    border-top:1px solid var(--gold-md);
+    border-bottom:1px solid var(--gold-md);
+    position:relative; overflow:hidden;
+  }
+  .sl-qs::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(201,168,76,.04) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .sl-qs-ar {
+    font-family:'Noto Serif',serif;
+    font-size:clamp(1.1rem,2.5vw,2rem); color:var(--gold);
+    direction:rtl; line-height:1.7; margin-bottom:20px; opacity:.85;
+  }
+  .sl-qs-en {
+    font-size:clamp(.88rem,1.4vw,1.05rem);
+    color:rgba(255,255,255,.58); max-width:560px; margin:0 auto 12px;
+    line-height:1.75; font-style:italic;
+  }
+  .sl-qs-en em { font-style:normal; color:var(--gold2); }
+  .sl-qs-attr {
+    font-size:.65rem; letter-spacing:.16em;
+    color:var(--muted); text-transform:uppercase;
+  }
+
+  /* ══════════════════════════════════════
+     CTA SECTION
+  ══════════════════════════════════════ */
+  .sl-cta { padding:80px 0 120px; }
+  .sl-cta-box {
+    display:grid; grid-template-columns:1fr 1fr;
+    border:1px solid var(--gold-md); border-radius:20px;
+    overflow:hidden; min-height:440px;
+  }
+
+  .sl-cta-media { position:relative; overflow:hidden; }
+  .sl-cta-media img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:brightness(.42) saturate(.55);
+    transition:transform 8s ease;
+  }
+  .sl-cta-media:hover img { transform:scale(1.04); }
+  .sl-cta-media::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg,transparent 60%,var(--card));
+  }
+
+  .sl-cta-copy {
+    background:var(--card); padding:72px 60px;
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+  .sl-cta-copy::before {
+    content:''; position:absolute;
+    top:-80px; right:-80px; width:320px; height:320px; border-radius:50%;
+    background:radial-gradient(circle,rgba(201,168,76,.05),transparent 70%);
+  }
+  .sl-cta-copy h2 { font-size:clamp(1.9rem,3vw,2.7rem); line-height:1.08; margin-bottom:14px; }
+  .sl-cta-copy p  { font-size:.92rem; color:var(--muted); line-height:1.72; margin-bottom:36px; max-width:360px; }
+  .sl-cta-btns { display:flex; gap:12px; flex-wrap:wrap; }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
+  @media (max-width:1100px) {
+    .sl-prod-row        { grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:900px) {
+    .sl-hero            { grid-template-columns:1fr; min-height:auto; }
+    .sl-hero-right      { height:56vw; grid-template-columns:1fr 1fr; }
+    .sl-hero-left       { padding:120px 36px 60px; }
+    .sl-brand-strip-inner { grid-template-columns:1fr; gap:36px; }
+    .sl-strip-div       { display:none; }
+    .sl-strip-col       { padding:0; border-bottom:1px solid var(--gold-md); padding-bottom:28px; }
+    .sl-about-grid      { grid-template-columns:1fr; }
+    .sl-about-imgs      { height:300px; }
+    .sl-img-b           { width:160px; height:180px; }
+    .sl-feat-row        { grid-template-columns:1fr; }
+    .sl-feat-stack      { grid-template-rows:auto auto; }
+    .sl-feat-sm         { grid-template-columns:130px 1fr; }
+    .sl-prod-row        { grid-template-columns:1fr 1fr; }
+    .sl-process-grid    { grid-template-columns:1fr 1fr; }
+    .sl-values-grid     { grid-template-columns:1fr; }
+    .sl-val-imgs        { grid-template-rows:220px 220px; }
+    .sl-cta-box         { grid-template-columns:1fr; }
+    .sl-cta-media       { height:240px; }
+    .sl-cta-copy        { padding:48px 32px; }
+  }
+  @media (max-width:640px) {
+    .sl-prod-row        { grid-template-columns:1fr; }
+    .sl-feat-sm         { grid-template-columns:1fr; }
+    .sl-feat-sm-img     { height:160px; }
+    .sl-process-grid    { grid-template-columns:1fr; }
+    .sl-val-imgs        { grid-template-columns:1fr; grid-template-rows:auto; }
+    .sl-val-img-cell.tall { grid-row:auto; }
+  }
+
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       NAV
+  ══════════════════════════════════════ -->
+  <nav id="nav">
+    <div class="container">
+      <div class="ni">
+        <a href="index.html" class="sl-logo-brand">
+          <span class="parent">StudioTaha /</span>
+          <span class="name">Salaam</span>
+        </a>
+        <ul class="nl">
+          <li><a href="#about">About</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#values">Values</a></li>
+          <li class="nav-dropdown">
+            <a href="index.html" class="nav-drop-toggle">StudioTaha <span class="drop-chevron">›</span></a>
+            <div class="nav-drop-menu">
+              <a href="index.html#services" class="nav-drop-item">
+                <span class="drop-item-icon">◈</span>
+                <span><strong>Services</strong><em>Creative & branding work</em></span>
+              </a>
+              <a href="index.html#stats" class="nav-drop-item">
+                <span class="drop-item-icon">◈</span>
+                <span><strong>Work</strong><em>Case studies</em></span>
+              </a>
+            </div>
+          </li>
+        </ul>
+        <a href="#cta" class="btn btn-gold" style="padding:12px 24px;font-size:.85rem">Start an Order →</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════
+       HERO
+  ══════════════════════════════════════ -->
+  <section class="sl-hero">
+
+    <!-- Left copy -->
+    <div class="sl-hero-left">
+
+      <p class="sl-hero-overtag">
+        by StudioTaha
+        <span class="dot-sep"></span>
+        Product Line
+        <span class="ar">سَلَام</span>
+      </p>
+
+      <h1 class="sl-hero-h1">
+        Great design
+        <span class="line2">you can hold.</span>
+      </h1>
+
+      <p class="sl-hero-arabic" style="opacity:.0;animation:fu .8s var(--ease) .3s forwards">
+        مَصْنُوعٌ بِإِتْقَان
+      </p>
+
+      <p class="sl-hero-body">
+        Salaam is <strong>StudioTaha's tangible product line</strong> — premium apparel,
+        art prints, branded mugs, and die-cut stickers crafted with the same obsessive care
+        that goes into every brand we build. When the screen turns off, <strong>Salaam stays.</strong>
+      </p>
+
+      <div class="sl-hero-ctas">
+        <a href="#products" class="btn btn-gold" style="padding:14px 28px;font-size:.9rem">Explore Products →</a>
+        <a href="#about" class="btn btn-g" style="padding:14px 28px;font-size:.9rem">Our Story</a>
+      </div>
+
+      <div class="sl-hero-stats">
+        <div class="sl-hstat">
+          <div class="sl-hstat-n">100%</div>
+          <div class="sl-hstat-l">Premium Materials</div>
+        </div>
+        <div class="sl-hstat">
+          <div class="sl-hstat-n">No MOQ</div>
+          <div class="sl-hstat-l">Start from 1 piece</div>
+        </div>
+        <div class="sl-hstat">
+          <div class="sl-hstat-n">4</div>
+          <div class="sl-hstat-l">Product Categories</div>
+        </div>
+        <div class="sl-hstat">
+          <div class="sl-hstat-n">∞</div>
+          <div class="sl-hstat-l">Custom options</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right image mosaic -->
+    <div class="sl-hero-right">
+      <!-- Top left: t-shirt -->
+      <div class="sl-mosaic-cell">
+        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=700&q=80&auto=format&fit=crop" alt="Premium apparel" loading="eager" />
+        <span class="sl-mosaic-lbl">Apparel</span>
+      </div>
+      <!-- Top right: mug -->
+      <div class="sl-mosaic-cell">
+        <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=700&q=80&auto=format&fit=crop" alt="Branded mug" loading="eager" />
+        <span class="sl-mosaic-lbl">Mugs</span>
+      </div>
+      <!-- Bottom left: stickers -->
+      <div class="sl-mosaic-cell">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80&auto=format&fit=crop" alt="Die-cut stickers" loading="eager" />
+        <span class="sl-mosaic-lbl">Stickers</span>
+      </div>
+      <!-- Bottom right: art print -->
+      <div class="sl-mosaic-cell">
+        <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=700&q=80&auto=format&fit=crop" alt="Premium print" loading="eager" />
+        <span class="sl-mosaic-lbl">Prints</span>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       BRAND STRIP — 3 pillars
+  ══════════════════════════════════════ -->
+  <div class="sl-brand-strip rv">
+    <div class="container">
+      <div class="sl-brand-strip-inner">
+
+        <div class="sl-strip-col">
+          <div class="sl-strip-num">سَلَام</div>
+          <h3>What is Salaam?</h3>
+          <p>A greeting. A promise of peace. And now, a product line that carries
+          your brand into the physical world with the same craft and intention
+          that StudioTaha brings to every visual identity.</p>
+        </div>
+
+        <div class="sl-strip-div"></div>
+
+        <div class="sl-strip-col">
+          <div class="sl-strip-num" style="font-family:var(--fh);color:var(--gold)">Why</div>
+          <h3>Beyond the screen</h3>
+          <p>Campaigns end. Feeds get buried. But a well-made t-shirt, a ceramic mug,
+          a framed print on the wall — these become part of someone's daily life.
+          That's the power of the tangible.</p>
+        </div>
+
+        <div class="sl-strip-div"></div>
+
+        <div class="sl-strip-col">
+          <div class="sl-strip-num" style="font-family:var(--fh);color:var(--gold)">Who</div>
+          <h3>For every scale</h3>
+          <p>Solo founders launching their first merch drop. Growing brands building
+          team culture. Organisations creating client gifts. Salaam has no minimum
+          order — just a minimum standard for quality.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       ABOUT — editorial split
+  ══════════════════════════════════════ -->
+  <section class="sl-about" id="about">
+    <div class="container">
+      <div class="sl-about-grid">
+
+        <!-- Image composition -->
+        <div class="sl-about-imgs rv">
+          <div class="sl-img-a">
+            <img
+              src="https://images.unsplash.com/photo-1493723843671-1d655e66ac1c?w=900&q=80&auto=format&fit=crop"
+              alt="Intentional craftsmanship — Salaam"
+              loading="lazy"
+            />
+            <div class="sl-img-pill">
+              <span class="sl-pill-dot"></span>Crafted with Ihsan
+            </div>
+          </div>
+          <div class="sl-img-b">
+            <img
+              src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=500&q=80&auto=format&fit=crop"
+              alt="Product detail"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Copy -->
+        <div class="rv d2">
+          <div class="sl-tag">About Salaam</div>
+          <h2>Not merchandise.<br /><span class="sl-gold2">Meaning, made tangible.</span></h2>
+
+          <p>StudioTaha builds the identities that define how brands are seen. Salaam takes
+          that work one step further — into the physical world, where design lives in the hands
+          of real people, not just on screens.</p>
+
+          <p>The word <em>Salaam</em> is not just a name. It is the greeting that opens
+          every meaningful encounter — a signal of care, respect, and presence. Every product
+          we make carries that same spirit: <strong>a gesture that says something about who
+          you are before you say a word.</strong></p>
+
+          <div class="sl-pull-quote">
+            <div class="sl-pq-ar">إِنَّ اللَّهَ يُحِبُّ إِذَا عَمِلَ أَحَدُكُمْ عَمَلاً أَنْ يُتْقِنَهُ</div>
+            <div class="sl-pq-en">"Allah loves that when one of you does a work, he does it with <em style="color:var(--gold2)">itqan</em> — with excellence and mastery."</div>
+          </div>
+
+          <p>That is the Salaam standard. Not good enough. <strong>Done right.</strong></p>
+
+          <a href="#products" class="btn btn-gold" style="padding:13px 26px;font-size:.88rem;margin-top:8px">See the Products →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       PRODUCTS
+  ══════════════════════════════════════ -->
+  <section class="sl-products" id="products">
+    <div class="container">
+
+      <div class="sl-prod-hdr rv">
+        <div>
+          <div class="sl-tag">What We Make</div>
+          <h2>Four categories.<br />One standard.</h2>
+        </div>
+        <p>Every product is designed, sampled, and quality-checked before it leaves with your name on it. No shortcuts. Ever.</p>
+      </div>
+
+      <!-- FEATURED ROW: T-shirts large + Mugs & Prints stacked -->
+      <div class="sl-feat-row rv">
+
+        <!-- Large: Apparel -->
+        <div class="sl-feat-main">
+          <div class="sl-feat-main-img">
+            <img
+              src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=1000&q=80&auto=format&fit=crop"
+              alt="Premium branded apparel — Salaam"
+              loading="lazy"
+            />
+          </div>
+          <div class="sl-feat-overlay">
+            <span class="sl-feat-num">01 — APPAREL</span>
+            <h3>T-Shirts, Hoodies<br />&amp; Caps</h3>
+            <p>Heavyweight blanks. Premium print methods. Clothes people actually want to wear — because wearing your brand shouldn't feel like an obligation.</p>
+            <div class="sl-feat-chips">
+              <span class="sl-chip">Screen Print</span>
+              <span class="sl-chip">Embroidery</span>
+              <span class="sl-chip">DTG Print</span>
+              <span class="sl-chip">Custom Labels</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stacked right: Mugs + Premium Prints -->
+        <div class="sl-feat-stack">
+
+          <div class="sl-feat-sm">
+            <div class="sl-feat-sm-img">
+              <img
+                src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&q=80&auto=format&fit=crop"
+                alt="Branded ceramic mugs"
+                loading="lazy"
+              />
+            </div>
+            <div class="sl-feat-sm-body">
+              <span class="sl-feat-num" style="font-size:.6rem;padding:2px 9px">02 — MUGS</span>
+              <h3>Mugs &amp; Drinkware</h3>
+              <span class="sl-prod-sub">Ceramic · Travel Cups · Tumblers</span>
+              <p>Your brand at the morning ritual — the most repeated daily moment in your client's life.</p>
+              <div class="sl-feat-chips"><span class="sl-chip">Ceramic</span><span class="sl-chip">Travel Cup</span><span class="sl-chip">Gift Packaging</span></div>
+            </div>
+          </div>
+
+          <div class="sl-feat-sm">
+            <div class="sl-feat-sm-img">
+              <img
+                src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&q=80&auto=format&fit=crop"
+                alt="Fine art premium prints"
+                loading="lazy"
+              />
+            </div>
+            <div class="sl-feat-sm-body">
+              <span class="sl-feat-num" style="font-size:.6rem;padding:2px 9px">04 — PRINTS</span>
+              <h3>Premium Prints</h3>
+              <span class="sl-prod-sub">Fine Art · Posters · Framed</span>
+              <p>Gallery-quality pieces for spaces where brand culture is built — offices, studios, waiting rooms.</p>
+              <div class="sl-feat-chips"><span class="sl-chip">Giclée</span><span class="sl-chip">Archival</span><span class="sl-chip">Custom Frame</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECONDARY ROW: 4 card grid -->
+      <div class="sl-prod-row rv" style="margin-top:18px">
+
+        <div class="sl-prod-card">
+          <div class="sl-prod-img">
+            <span class="sl-prod-badge">Stickers — 03</span>
+            <img
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=75&auto=format&fit=crop"
+              alt="Die-cut stickers"
+              loading="lazy"
+            />
+          </div>
+          <div class="sl-prod-body">
+            <h3>Die-Cut Stickers</h3>
+            <span class="sl-prod-sub">Vinyl · Holographic · Kiss-Cut</span>
+            <p>Small format, huge reach. Stickers travel wherever your audience goes — laptops, bottles, walls, packaging.</p>
+            <div class="sl-prod-chips"><span class="sl-chip">Vinyl</span><span class="sl-chip">Holographic</span><span class="sl-chip">Kiss-Cut</span></div>
+          </div>
+        </div>
+
+        <div class="sl-prod-card">
+          <div class="sl-prod-img">
+            <span class="sl-prod-badge">Gift Sets</span>
+            <img
+              src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=700&q=75&auto=format&fit=crop"
+              alt="Brand gift sets"
+              loading="lazy"
+            />
+          </div>
+          <div class="sl-prod-body">
+            <h3>Branded Gift Sets</h3>
+            <span class="sl-prod-sub">Curated · Boxed · Custom</span>
+            <p>Combine apparel, drinkware, stickers, and prints into a single premium gift set with custom packaging.</p>
+            <div class="sl-prod-chips"><span class="sl-chip">Curated Box</span><span class="sl-chip">Custom Insert</span><span class="sl-chip">Ribbon</span></div>
+          </div>
+        </div>
+
+        <div class="sl-prod-card">
+          <div class="sl-prod-img">
+            <span class="sl-prod-badge">Packaging</span>
+            <img
+              src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=700&q=75&auto=format&fit=crop"
+              alt="Custom product packaging"
+              loading="lazy"
+            />
+          </div>
+          <div class="sl-prod-body">
+            <h3>Custom Packaging</h3>
+            <span class="sl-prod-sub">Boxes · Bags · Labels</span>
+            <p>The unboxing experience is your brand's handshake. We design and produce packaging that makes that moment count.</p>
+            <div class="sl-prod-chips"><span class="sl-chip">Rigid Box</span><span class="sl-chip">Tissue Paper</span><span class="sl-chip">Sticker Seal</span></div>
+          </div>
+        </div>
+
+        <div class="sl-prod-card">
+          <div class="sl-prod-img">
+            <span class="sl-prod-badge">Notebooks</span>
+            <img
+              src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=700&q=75&auto=format&fit=crop"
+              alt="Premium branded notebooks"
+              loading="lazy"
+            />
+          </div>
+          <div class="sl-prod-body">
+            <h3>Notebooks &amp; Stationery</h3>
+            <span class="sl-prod-sub">Hardcover · Softcover · Pens</span>
+            <p>From branded notebooks to custom pens and letterheads — the desk set that keeps your identity front and centre.</p>
+            <div class="sl-prod-chips"><span class="sl-chip">Hardcover</span><span class="sl-chip">Foil Stamp</span><span class="sl-chip">Lined / Dot</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       HOW IT WORKS
+  ══════════════════════════════════════ -->
+  <section class="sl-process" id="process">
+    <div class="container">
+      <div class="sl-process-hdr rv">
+        <div class="sl-tag">How It Works</div>
+        <h2>From idea to<br /><span class="sl-gold2">your hands.</span></h2>
+      </div>
+      <div class="sl-process-grid rv d1">
+        <div class="sl-step">
+          <div class="sl-step-num">01</div>
+          <h3>Brief</h3>
+          <p>Tell us what you need — product type, quantity, intended use, and any design assets you already have. No brief is too small or too ambitious.</p>
+        </div>
+        <div class="sl-step">
+          <div class="sl-step-num">02</div>
+          <h3>Design</h3>
+          <p>Our team adapts or creates artwork specifically for the product format — considering print method, material, size, and how the design will hold up over time.</p>
+        </div>
+        <div class="sl-step">
+          <div class="sl-step-num">03</div>
+          <h3>Sample</h3>
+          <p>Before production begins, you approve a physical sample or digital proof. We only move forward when every detail is exactly right.</p>
+        </div>
+        <div class="sl-step">
+          <div class="sl-step-num">04</div>
+          <h3>Deliver</h3>
+          <p>Production, quality control, and delivery to your door. Every order is packed with the same care we put into designing it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       VALUES
+  ══════════════════════════════════════ -->
+  <section class="sl-values" id="values">
+    <div class="container">
+      <div class="sl-values-grid">
+
+        <!-- Image mosaic -->
+        <div class="sl-val-imgs rv">
+
+          <div class="sl-val-img-cell tall">
+            <img
+              src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=700&q=80&auto=format&fit=crop"
+              alt="Craftsmanship"
+              loading="lazy"
+            />
+            <div class="sl-ar-tile">
+              <div class="sl-ar-word">إِتْقَان</div>
+              <div class="sl-ar-tr">Itqan · Excellence</div>
+            </div>
+          </div>
+
+          <div class="sl-val-img-cell">
+            <img
+              src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600&q=80&auto=format&fit=crop"
+              alt="Quality materials"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="sl-val-img-cell">
+            <img
+              src="https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?w=600&q=80&auto=format&fit=crop"
+              alt="Design detail"
+              loading="lazy"
+            />
+          </div>
+
+        </div>
+
+        <!-- Values list -->
+        <div class="rv d1">
+          <div class="sl-tag">Our Values</div>
+          <h2>Not just products.<br /><span class="sl-gold2">Purposeful objects.</span></h2>
+          <p style="font-size:.93rem;line-height:1.85;color:rgba(255,255,255,.62);margin-bottom:28px">
+            In a world drowning in cheap, disposable merch, Salaam takes the opposite
+            position. The things a brand puts its name on should reflect
+            the brand's own standard — no shortcuts, no compromise.
+          </p>
+
+          <div class="sl-val-list">
+            <div class="sl-val-item">
+              <div class="sl-val-icon">◈</div>
+              <div>
+                <h4>Quality over quantity</h4>
+                <p>We only work with materials and methods we'd put our own name on. Every product is sampled and approved before production.</p>
+              </div>
+            </div>
+            <div class="sl-val-item">
+              <div class="sl-val-icon">◈</div>
+              <div>
+                <h4>Design-first, always</h4>
+                <p>Built on StudioTaha's creative rigour. Your product isn't just printed — it's designed, composed, and considered for the format.</p>
+              </div>
+            </div>
+            <div class="sl-val-item">
+              <div class="sl-val-icon">◈</div>
+              <div>
+                <h4>Consistency at every touchpoint</h4>
+                <p>From the hang tag to the inner label to the outer box — every detail is a chance to reinforce who you are.</p>
+              </div>
+            </div>
+            <div class="sl-val-item">
+              <div class="sl-val-icon">◈</div>
+              <div>
+                <h4>Accessible for every scale</h4>
+                <p>Solo founders to large organisations. No minimum order, no gatekeeping. Great physical branding isn't just for big budgets.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       QUOTE STRIP
+  ══════════════════════════════════════ -->
+  <div class="sl-qs rv">
+    <div class="container">
+      <div class="sl-qs-ar">إِنَّ اللَّهَ يُحِبُّ إِذَا عَمِلَ أَحَدُكُمْ عَمَلاً أَنْ يُتْقِنَهُ</div>
+      <p class="sl-qs-en">"Indeed, Allah loves that when one of you does a work, he does it with <em>itqan</em> — with excellence and mastery."</p>
+      <p class="sl-qs-attr">Hadith · Reported by al-Bayhaqī</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       CTA
+  ══════════════════════════════════════ -->
+  <section class="sl-cta" id="cta">
+    <div class="container">
+      <div class="sl-cta-box rv">
+
+        <div class="sl-cta-media">
+          <img
+            src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=80&auto=format&fit=crop"
+            alt="Start your Salaam order"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="sl-cta-copy">
+          <div class="sl-tag">Ready?</div>
+          <h2>Let's put your brand<br />in people's <span class="sl-gold2">hands.</span></h2>
+          <p>
+            Tell us about your project — a merch drop, a client gift set, a team kit,
+            or a full physical brand suite. We'll take it from brief to doorstep.
+          </p>
+          <div class="sl-cta-btns">
+            <a href="index.html" class="btn btn-gold" style="padding:15px 30px;font-size:.9rem">Start an Order →</a>
+            <a href="#products" class="btn btn-gold-g" style="padding:15px 30px;font-size:.9rem">Browse Products</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="fi">
+        <div class="sl-logo-brand" style="font-size:1.1rem">
+          <span class="parent">StudioTaha /</span>
+          <span class="name">Salaam</span>
+        </div>
+        <ul class="fl">
+          <li><a href="#about">About</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#values">Values</a></li>
+          <li><a href="index.html" style="color:var(--accent)">← StudioTaha</a></li>
+        </ul>
+        <p style="font-size:.74rem;color:rgba(255,255,255,.18)">© 2025 Salaam by StudioTaha · Photos via <a href="https://unsplash.com" target="_blank" style="color:rgba(201,168,76,.4)">Unsplash</a></p>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    /* Sticky nav */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    /* Scroll reveal */
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('vi'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+  </script>
+
+</body>
+</html>
