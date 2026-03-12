@@ -812,7 +812,13 @@
       btn.textContent = 'Sending…';
       btn.disabled    = true;
 
-      /*
-       * Replace the setTimeout below with your real form handler, e.g.:
-       *   fetch('/api/contact', { method:'POST', body: JSON.stringify({...}) })
-       *   or E
+      /* Replace setTimeout with fetch/EmailJS/Formspree for production */
+      setTimeout(() => {
+        document.getElementById('modalForm').style.display = 'none';
+        document.getElementById('modalSuccess').classList.add('show');
+      }, 1400);
+    }
+  </script>
+
+</body>
+</html>
